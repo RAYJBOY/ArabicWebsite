@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
+import { SideBar } from "./components/sidebar/SideBar";
 
 function App() {
   return (
     <div>
-      My App
+      <SideBar />
     </div>
   );
 }
