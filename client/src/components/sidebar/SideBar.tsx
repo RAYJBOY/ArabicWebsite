@@ -4,6 +4,8 @@ import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
+import SearchIcon from '@mui/icons-material/Search';
+import SchoolIcon from '@mui/icons-material/School';
 import { useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
@@ -21,9 +23,9 @@ export const SideBar = () => {
         <ListItem>
           <ListItemButton onClick={expandCategory}>
             <ListItemIcon>
-              <MenuBookIcon/>
+              <SearchIcon/>
             </ListItemIcon>
-            <ListItemText primary="Courses" />
+            <ListItemText primary="Explore" />
             {expand ? <ExpandMore/> : <ExpandLess/>}
           </ListItemButton>
         </ListItem>
@@ -42,7 +44,7 @@ export const SideBar = () => {
             <ListItem>
               <ListItemButton sx={{paddingLeft: 5}}>
                 <ListItemIcon>
-                  <MenuBookIcon/>
+                  <SchoolIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Islamic Studies" />
               </ListItemButton>
