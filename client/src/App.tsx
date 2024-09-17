@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div>
-      <Header />
+      <Header displayTitle={true}/>
       <SideBar />
       <Login open={false} handleClose={handleClose}/>
     </div>
