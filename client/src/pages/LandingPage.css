@@ -1,0 +1,26 @@
+.gridContainer {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 2%;
+}
+
+.gridItemSpan3 {
+    grid-column: span 3;
+}
+
+.gridItemSpan2 {
+    display: grid;
+    grid-column: span 2;
+    align-items: center;
+}
+
+.gridItem {
+    align-items: center;
+    text-align: center;
+}
+
+.gridImage {
+    text-align: left;
+}
+

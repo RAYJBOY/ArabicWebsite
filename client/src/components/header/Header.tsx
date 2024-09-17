@@ -19,7 +19,7 @@ export const Header = ({displayTitle}: HeaderProps) => {
                 </Typography>}
                 <Box sx={{display: 'flex', flexDirection: "row", marginLeft: 'auto'}}>
                   <Button color="inherit">Courses</Button>
-                  <Button color="inherit" startIcon={<Login />} sx={{marginLeft: '2%'}}>Login</Button>
+                  <Button color="inherit" startIcon={<Login />} sx={{marginLeft: '15%'}}>Login</Button>
                 </Box>
             </Toolbar>
         </AppBar>

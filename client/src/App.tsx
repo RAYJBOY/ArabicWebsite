@@ -1,19 +1,16 @@
 import React from "react";
-import { SideBar } from "./components/sidebar/SideBar";
-import { Header } from "./components/header/Header";
-import { Login } from "./components/login/Login";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { LandingPage } from "./pages/LandingPage";
 
 function App() {
 
-  const handleClose = () => {
-
-  }
-
   return (
     <div>
-      <Header displayTitle={true}/>
-      <SideBar />
-      <Login open={false} handleClose={handleClose}/>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage></LandingPage>}/>
+        </Routes>
+      </Router>
     </div>
   );
 }
