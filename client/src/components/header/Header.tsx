@@ -1,17 +1,23 @@
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { Login } from "@mui/icons-material";
+import { SideBar } from "../sidebar/SideBar";
+import { useState } from "react";
 
 interface HeaderProps {
   displayTitle: boolean
 }
 
 export const Header = ({displayTitle}: HeaderProps) => {
+
+  const [openSideBar, setOpenSideBar] = useState(false);
+
   return (
-    <Box>
+    <>
+      <Box>
         <AppBar position="static">
             <Toolbar>
-                <IconButton>
+                <IconButton onClick={() => setOpenSideBar(!openSideBar)}>
                     <MenuIcon />
                 </IconButton>
                 {displayTitle && <Typography variant="h6" component="div" sx={{flexGrow: 1, textAlign: "center"}}>
@@ -23,6 +29,9 @@ export const Header = ({displayTitle}: HeaderProps) => {
                 </Box>
             </Toolbar>
         </AppBar>
-    </Box>
+      </Box>
+      <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar}/>
+    </>
+
   );
 };

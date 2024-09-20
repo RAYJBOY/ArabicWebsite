@@ -1,4 +1,4 @@
-import { Box, Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Box, Collapse, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -9,7 +9,12 @@ import SchoolIcon from '@mui/icons-material/School';
 import { useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
-export const SideBar = () => {
+interface SideBarProps {
+  openSideBar: boolean
+  setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const SideBar = ({openSideBar, setOpenSideBar}: SideBarProps) => {
 
   const [expand, setExpand] = useState(false);
 
@@ -18,7 +23,7 @@ export const SideBar = () => {
   }
 
   const sideBarList = (
-    <Box sx={{width: '20%', bgcolor: 'background.paper'}}>
+    <Box>
       <List>
         <ListItem>
           <ListItemButton onClick={expandCategory}>
@@ -26,7 +31,7 @@ export const SideBar = () => {
               <SearchIcon/>
             </ListItemIcon>
             <ListItemText primary="Explore" />
-            {expand ? <ExpandMore/> : <ExpandLess/>}
+            {expand ? <ExpandLess/> : <ExpandMore/>}
           </ListItemButton>
         </ListItem>
 
@@ -92,6 +97,8 @@ export const SideBar = () => {
   )
 
   return <div>
-    {sideBarList}
+    <Drawer open={openSideBar} onClose={() => setOpenSideBar(false)}>
+      {sideBarList}
+    </Drawer>
   </div>;
 };
