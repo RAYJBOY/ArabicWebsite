@@ -3,6 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Login } from "@mui/icons-material";
 import { SideBar } from "../sidebar/SideBar";
 import { useState } from "react";
+import { Link } from "react-router-dom"
 
 interface HeaderProps {
   displayTitle: boolean
@@ -21,7 +22,7 @@ export const Header = ({displayTitle}: HeaderProps) => {
                     <MenuIcon />
                 </IconButton>
                 {displayTitle && <Typography variant="h6" component="div" sx={{flexGrow: 1, textAlign: "center"}}>
-                        Dr.Alkawthar's Classroom
+                        <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>Dr.Alkawthar's Classroom</Link>
                 </Typography>}
                 <Box sx={{display: 'flex', flexDirection: "row", marginLeft: 'auto'}}>
                   <Button color="inherit">Courses</Button>

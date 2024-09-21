@@ -22,6 +22,6 @@
   },
   "include": [
     "src",
-    "src/react-app-env.d.ts" 
+    "src/pages/react-app-env.d.ts" 
   ]
 }
