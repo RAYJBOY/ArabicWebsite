@@ -1,7 +1,8 @@
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/material"
-import ArabicPic from "../../assets/images/islamicStudiesCourseHeader.jpg"
+import ArabicPic from "../../../assets/images/islamicStudiesCourseHeader.jpg"
 import './ArabicCourse.css'
-import { Header } from "../../components/header/Header"
+import { Header } from "../../../components/header/Header"
+import { Link } from "react-router-dom"
 
 export const ArabicCourse = () => {
     return(
@@ -23,7 +24,9 @@ export const ArabicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button>Learn more</Button>
+                            <Link to="/arabic/beginnerLevel" style={{ textDecoration: 'none' }}>
+                                <Button>Learn more</Button>
+                            </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -38,7 +41,9 @@ export const ArabicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/arabic/advancedLevel" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -53,7 +58,9 @@ export const ArabicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/arabic/quranicArabicWords" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -68,7 +75,9 @@ export const ArabicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/arabic/conversation" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -83,7 +92,9 @@ export const ArabicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/arabic/levelOne" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -98,7 +109,9 @@ export const ArabicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/arabic/levelTwo" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -113,7 +126,9 @@ export const ArabicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/arabic/levelThree" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>

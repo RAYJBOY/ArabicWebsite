@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/material"
-import QuranPic from "../../assets/images/islamicStudiesCourseHeader.jpg"
+import QuranPic from "../../../assets/images/islamicStudiesCourseHeader.jpg"
 import './QuranCourse.css'
-import { Header } from "../../components/header/Header"
+import { Header } from "../../../components/header/Header"
 
 export const QuranCourse = () => {
     return(

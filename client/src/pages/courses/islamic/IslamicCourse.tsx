@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/material"
-import IslamicPic from "../../assets/images/islamicStudiesCourseHeader.jpg"
+import IslamicPic from "../../../assets/images/islamicStudiesCourseHeader.jpg"
 import './IslamicCourse.css'
-import { Header } from "../../components/header/Header"
+import { Header } from "../../../components/header/Header"
 
 export const IslamicCourse = () => {
     return(
