@@ -21,7 +21,7 @@ export const Header = ({displayTitle}: HeaderProps) => {
                 <IconButton onClick={() => setOpenSideBar(!openSideBar)}>
                     <MenuIcon />
                 </IconButton>
-                {displayTitle && <Typography variant="h6" component="div" sx={{flexGrow: 1, textAlign: "center"}}>
+                {displayTitle && <Typography variant="h6" component="div" sx={{flexGrow: 1, marginLeft: "2%"}}>
                         <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>Dr.Alkawthar's Classroom</Link>
                 </Typography>}
                 <Box sx={{display: 'flex', flexDirection: "row", marginLeft: 'auto'}}>

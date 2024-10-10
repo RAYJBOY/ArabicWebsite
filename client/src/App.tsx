@@ -21,6 +21,7 @@ import { QuranHowToReadCourse } from "./pages/courses/quran/quran-course-details
 import { QuranRecitationCourse } from "./pages/courses/quran/quran-course-details/QuranRecitationCourse";
 import { QuranMemorizationCourse } from "./pages/courses/quran/quran-course-details/QuranMemorizationCourse";
 import { QuranTajweedCourse } from "./pages/courses/quran/quran-course-details/QuranTajweedCourse";
+import { EnrollmentPage } from "./pages/EnrollmentPage";
 
 function App() {
 
@@ -56,7 +57,7 @@ function App() {
           <Route path="/quran/tajweed" element={<QuranTajweedCourse/>}/>
 
           {/* Enrollment route */}
-          <Route path="/enroll" element={<QuranCourse/>}/>
+          <Route path="/enroll" element={<EnrollmentPage/>}/>
 
         </Routes>
       </Router>

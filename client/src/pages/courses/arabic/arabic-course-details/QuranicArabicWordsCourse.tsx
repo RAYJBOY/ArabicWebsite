@@ -25,7 +25,7 @@ export const QuranicArabicWordsCourse = () => {
                         </CardContent>
                         <CardActions>
                             <div style={{display:'flex', width: '100%'}}>
-                                <Link to="/arabic/advancedLevel" style={{ textDecoration: 'none', width: '100%' }}>
+                                <Link to="/enroll" style={{ textDecoration: 'none', width: '100%' }}>
                                     <Button sx={{float: 'right'}}>Enroll Now</Button>
                                 </Link>
                             </div>
