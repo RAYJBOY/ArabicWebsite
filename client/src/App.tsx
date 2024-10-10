@@ -11,6 +11,12 @@ import { ArabicConversationCourse } from "./pages/courses/arabic/arabic-course-d
 import { ArabicLevelOneCourse } from "./pages/courses/arabic/arabic-course-details/ArabicLevelOneCourse";
 import { ArabicLevelTwoCourse } from "./pages/courses/arabic/arabic-course-details/ArabicLevelTwoCourse";
 import { ArabicLevelThreeCourse } from "./pages/courses/arabic/arabic-course-details/ArabicLevelThreeCourse";
+import { IslamicFiqhCourse } from "./pages/courses/islamic/islamic-course-details/IslamicFiqhCourse";
+import { IslamicSeeraCourse } from "./pages/courses/islamic/islamic-course-details/IslamicSeeraCourse";
+import { IslamicHadeethCourse } from "./pages/courses/islamic/islamic-course-details/IslamicHadeethCourse";
+import { IslamicAqeedaCourse } from "./pages/courses/islamic/islamic-course-details/IslamicAqeedaCourse";
+import { IslamicTafseerCourse } from "./pages/courses/islamic/islamic-course-details/IslamicTafseerCourse";
+import { IslamicHistoryCourse } from "./pages/courses/islamic/islamic-course-details/IslamicHistoryCourse";
 
 function App() {
 
@@ -31,9 +37,19 @@ function App() {
 
           {/* All Islamic routes */}
           <Route path="/islamicstudies" element={<IslamicCourse/>}/>
+          <Route path="/islamicstudies/fiqh" element={<IslamicFiqhCourse/>}/>
+          <Route path="/islamicstudies/seera" element={<IslamicSeeraCourse/>}/>
+          <Route path="/islamicstudies/hadeeth" element={<IslamicHadeethCourse/>}/>
+          <Route path="/islamicstudies/aqeeda" element={<IslamicAqeedaCourse/>}/>
+          <Route path="/islamicstudies/tafseer" element={<IslamicTafseerCourse/>}/>
+          <Route path="/islamicstudies/islamicHistory" element={<IslamicHistoryCourse/>}/>
 
           {/* All Quran routes */}
           <Route path="/quran" element={<QuranCourse/>}/>
+
+          {/* Enrollment route */}
+          <Route path="/enroll" element={<QuranCourse/>}/>
+
         </Routes>
       </Router>
     </div>

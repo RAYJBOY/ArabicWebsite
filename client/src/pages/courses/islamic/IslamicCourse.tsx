@@ -2,6 +2,7 @@ import { Button, Card, CardActions, CardContent, Typography } from "@mui/materia
 import IslamicPic from "../../../assets/images/islamicStudiesCourseHeader.jpg"
 import './IslamicCourse.css'
 import { Header } from "../../../components/header/Header"
+import { Link } from "react-router-dom"
 
 export const IslamicCourse = () => {
     return(
@@ -23,7 +24,9 @@ export const IslamicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/islamicstudies/fiqh" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -38,7 +41,9 @@ export const IslamicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/islamicstudies/seera" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -53,7 +58,9 @@ export const IslamicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/islamicstudies/hadeeth" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -68,7 +75,9 @@ export const IslamicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/islamicstudies/aqeeda" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -83,7 +92,9 @@ export const IslamicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/islamicstudies/tafseer" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
@@ -98,7 +109,9 @@ export const IslamicCourse = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
+                        <Link to="/islamicstudies/islamicHistory" style={{ textDecoration: 'none' }}>
                             <Button>Learn more</Button>
+                        </Link>
                         </CardActions>
                     </Card>
                 </div>
