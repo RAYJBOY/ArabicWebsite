@@ -17,6 +17,10 @@ import { IslamicHadeethCourse } from "./pages/courses/islamic/islamic-course-det
 import { IslamicAqeedaCourse } from "./pages/courses/islamic/islamic-course-details/IslamicAqeedaCourse";
 import { IslamicTafseerCourse } from "./pages/courses/islamic/islamic-course-details/IslamicTafseerCourse";
 import { IslamicHistoryCourse } from "./pages/courses/islamic/islamic-course-details/IslamicHistoryCourse";
+import { QuranHowToReadCourse } from "./pages/courses/quran/quran-course-details/QuranHowToReadCourse";
+import { QuranRecitationCourse } from "./pages/courses/quran/quran-course-details/QuranRecitationCourse";
+import { QuranMemorizationCourse } from "./pages/courses/quran/quran-course-details/QuranMemorizationCourse";
+import { QuranTajweedCourse } from "./pages/courses/quran/quran-course-details/QuranTajweedCourse";
 
 function App() {
 
@@ -46,6 +50,10 @@ function App() {
 
           {/* All Quran routes */}
           <Route path="/quran" element={<QuranCourse/>}/>
+          <Route path="/quran/howToRead" element={<QuranHowToReadCourse/>}/>
+          <Route path="/quran/recitation" element={<QuranRecitationCourse/>}/>
+          <Route path="/quran/memorization" element={<QuranMemorizationCourse/>}/>
+          <Route path="/quran/tajweed" element={<QuranTajweedCourse/>}/>
 
           {/* Enrollment route */}
           <Route path="/enroll" element={<QuranCourse/>}/>

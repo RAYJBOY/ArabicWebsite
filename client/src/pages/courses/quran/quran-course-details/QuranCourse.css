@@ -1,0 +1,18 @@
+.quranCourseContainer {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    margin: 2%;
+    padding: 0 5%;
+}
+
+.quranCourseImageContainer {
+    width: 100%;
+    position: relative;
+}
+
+.quranCourseImageContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

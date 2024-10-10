@@ -2,6 +2,7 @@ import { Button, Card, CardActions, CardContent, Typography } from "@mui/materia
 import QuranPic from "../../../assets/images/islamicStudiesCourseHeader.jpg"
 import './QuranCourse.css'
 import { Header } from "../../../components/header/Header"
+import { Link } from "react-router-dom"
 
 export const QuranCourse = () => {
     return(
@@ -23,7 +24,9 @@ export const QuranCourse = () => {
                         </Typography>
                     </CardContent>
                     <CardActions>
+                    <Link to="/quran/howToRead" style={{ textDecoration: 'none' }}>
                         <Button>Learn more</Button>
+                    </Link>
                     </CardActions>
                 </Card>
             </div>
@@ -38,7 +41,9 @@ export const QuranCourse = () => {
                         </Typography>
                     </CardContent>
                     <CardActions>
+                    <Link to="/quran/recitation" style={{ textDecoration: 'none' }}>
                         <Button>Learn more</Button>
+                    </Link>
                     </CardActions>
                 </Card>
             </div>
@@ -53,7 +58,9 @@ export const QuranCourse = () => {
                         </Typography>
                     </CardContent>
                     <CardActions>
+                    <Link to="/quran/memorization" style={{ textDecoration: 'none' }}>
                         <Button>Learn more</Button>
+                    </Link>
                     </CardActions>
                 </Card>
             </div>
@@ -68,7 +75,9 @@ export const QuranCourse = () => {
                         </Typography>
                     </CardContent>
                     <CardActions>
+                    <Link to="/quran/tajweed" style={{ textDecoration: 'none' }}>
                         <Button>Learn more</Button>
+                    </Link>
                     </CardActions>
                 </Card>
             </div>
