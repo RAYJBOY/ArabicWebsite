@@ -13,7 +13,7 @@ export const ArabicCourse = () => {
                     <Typography sx={{position:'absolute', color:'white', top: '5%', left: '2%'}} variant="h4">Arabic</Typography>
                     <img src={ArabicPic}></img>
                 </div>
-                <div className="arabicCourseGridItem">
+                <div>
                     <Card>
                         <CardContent>
                             <Typography variant="h5" component="div" sx={{marginBottom: '3%', textAlign: 'center'}}>

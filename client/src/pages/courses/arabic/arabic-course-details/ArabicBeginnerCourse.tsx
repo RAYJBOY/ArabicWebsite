@@ -9,30 +9,29 @@ export const ArabicBeginnerCourse = () => {
         <>
             <Header displayTitle={true}/>
             <div className="arabicBeginnerCourseContainer">
-
                 <div className="arabicBeginnerCourseImageContainer">
                     <Typography sx={{position:'absolute', color:'white', top: '5%', left: '2%'}} variant="h4">Arabic</Typography>
                     <img src={ArabicPic}></img>
                 </div>
-
-                <div className="">
+                <div>
                     <Card>
                         <CardContent>
                             <Typography variant="h5" component="div" sx={{marginBottom: '3%', textAlign: 'center'}}>
                                 Beginner
                             </Typography>
-                            <Typography variant="body2">
-                                Some text about beginner level arabic classes
+                            <Typography variant="body1">
+                                Lorem ipsum odor amet, consectetuer adipiscing elit. Tortor malesuada viverra turpis eros integer mauris. Penatibus platea a mauris vulputate in hendrerit tristique. Suspendisse dapibus neque auctor placerat imperdiet sociosqu erat aenean. Ante pretium cursus amet sed aptent quam. Inceptos montes gravida porta dui ut ante dis purus. Donec nisi dapibus accumsan vestibulum laoreet vulputate phasellus. Duis lectus fringilla faucibus augue ad a. Mauris parturient pulvinar rhoncus tellus mattis diam eros dignissim ipsum. Cras pretium eget laoreet taciti et orci magnis. Convallis aliquam consequat placerat molestie dignissim nisl amet pellentesque. Feugiat volutpat bibendum integer nascetur consequat molestie sollicitudin curabitur? Condimentum neque odio in ut ridiculus suspendisse sollicitudin. Nunc neque montes ultrices hac morbi penatibus nunc dapibus molestie.
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Link to="/arabic/beginnerLevel" style={{ textDecoration: 'none' }}>
-                                <Button>Learn more</Button>
-                            </Link>
+                            <div style={{display:'flex', width: '100%'}}>
+                                <Link to="/arabic/beginnerLevel" style={{ textDecoration: 'none', width: '100%' }}>
+                                    <Button sx={{float: 'right'}}>Enroll Now</Button>
+                                </Link>
+                            </div>
                         </CardActions>
                     </Card>
                 </div>
-
             </div>
         </>
     )
