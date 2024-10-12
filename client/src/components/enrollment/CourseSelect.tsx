@@ -25,6 +25,7 @@ export const CourseSelect = () => {
           value={selectedCourse}
           label="Course"
           labelId="courseSelect"
+          fullWidth
           onChange={handleCourseSelect}
           MenuProps={{
             PaperProps: {
