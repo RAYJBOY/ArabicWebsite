@@ -1,4 +1,4 @@
-import { Grid2, Stack, TextField, Typography } from "@mui/material"
+import { Button, Grid2, Stack, TextField, Typography } from "@mui/material"
 import { Header } from "../components/header/Header"
 import "./EnrollmentPage.css"
 import { CourseSelect } from "../components/enrollment/CourseSelect"
@@ -40,6 +40,26 @@ export const EnrollmentPage = () => {
                             </Grid2>
                         </Grid2>
 
+                        <Grid2 container spacing={2}>
+                            <Grid2 size={12}>
+                                <Typography>Payment Details</Typography>
+                            </Grid2>
+                            <Grid2 size={4}>
+                                <TextField variant="outlined" label="Card details" fullWidth required/>
+                            </Grid2>
+                            <Grid2 size={2}>
+                                <TextField variant="outlined" label="Expiry date" required fullWidth/>
+                            </Grid2>
+                            <Grid2 size={2}>
+                                <TextField variant="outlined" label="Security code" required fullWidth/>
+                            </Grid2>
+                        </Grid2>
+
+                        <Grid2>
+                            <Button variant="contained">
+                                Submit
+                            </Button>
+                        </Grid2>
                     </Stack>
 
                 </form>
