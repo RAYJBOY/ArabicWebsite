@@ -8,6 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SchoolIcon from '@mui/icons-material/School';
 import { useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 interface SideBarProps {
   openSideBar: boolean
@@ -38,41 +39,50 @@ export const SideBar = ({openSideBar, setOpenSideBar}: SideBarProps) => {
         <Collapse in={expand} timeout="auto" unmountOnExit>
           <List component="div">
             <ListItem>
-              <ListItemButton sx={{paddingLeft: 5}}>
-                <ListItemIcon>
-                  <RecordVoiceOverIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Arabic" />
-              </ListItemButton>
+              <Link to="/arabic" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
+                <ListItemButton sx={{paddingLeft: 5, width: "100%"}}>
+                  <ListItemIcon>
+                    <RecordVoiceOverIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary="Arabic" />
+                </ListItemButton>
+              </Link>
+              
             </ListItem>
 
             <ListItem>
-              <ListItemButton sx={{paddingLeft: 5}}>
-                <ListItemIcon>
-                  <SchoolIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Islamic Studies" />
-              </ListItemButton>
+              <Link to="/islamicstudies" style={{ textDecoration: 'none', color: 'black' }}>
+                <ListItemButton sx={{paddingLeft: 5}}>
+                  <ListItemIcon>
+                    <SchoolIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary="Islamic Studies" />
+                </ListItemButton>
+              </Link>
             </ListItem>
 
             <ListItem>
-              <ListItemButton sx={{paddingLeft: 5}}>
-                <ListItemIcon>
-                  <MenuBookIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Quran" />
-              </ListItemButton>
+            <Link to="/quran" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
+                <ListItemButton sx={{paddingLeft: 5}}>
+                  <ListItemIcon>
+                    <MenuBookIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary="Quran" />
+                </ListItemButton>
+              </Link>
             </ListItem>
           </List>
         </Collapse>
 
         <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
-              <SubscriptionsIcon/>
-            </ListItemIcon>
-            <ListItemText primary="My Enrollments" />
-          </ListItemButton>
+        <Link to="/enroll" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
+            <ListItemButton>
+              <ListItemIcon>
+                <SubscriptionsIcon/>
+              </ListItemIcon>
+              <ListItemText primary="My Enrollments" />
+            </ListItemButton>
+          </Link>
         </ListItem>
 
         <ListItem>

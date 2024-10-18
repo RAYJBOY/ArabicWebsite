@@ -1,4 +1,3 @@
-import { Header } from "../../../../components/header/Header"
 import ArabicPic from "../../../../assets/images/islamicStudiesCourseHeader.jpg"
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/material"
 import { Link } from "react-router-dom"
@@ -7,7 +6,6 @@ import "./QuranCourse.css"
 export const QuranRecitationCourse = () => {
     return (
         <>
-            <Header displayTitle={true}/>
             <div className="quranCourseContainer">
                 <div className="quranCourseImageContainer">
                     <Typography sx={{position:'absolute', color:'white', top: '5%', left: '2%'}} variant="h4">Quran</Typography>

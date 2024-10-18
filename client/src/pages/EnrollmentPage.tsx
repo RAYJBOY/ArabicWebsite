@@ -1,5 +1,4 @@
 import { Button, Grid2, Stack, TextField, Typography } from "@mui/material"
-import { Header } from "../components/header/Header"
 import "./EnrollmentPage.css"
 import { CourseSelect } from "../components/enrollment/CourseSelect"
 import { CourseDatePicker } from "../components/enrollment/CourseDatePicker"
@@ -8,7 +7,6 @@ export const EnrollmentPage = () => {
     
     return (
         <>
-            <Header displayTitle={true}/>
             <div style={{margin: '2%'}}>
                 <Typography variant="h2" align="center">Enrollment</Typography>
             </div>

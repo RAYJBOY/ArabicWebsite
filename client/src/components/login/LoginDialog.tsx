@@ -6,7 +6,7 @@ type LoginModalProps = {
   handleClose: () => void;
 };
 
-export const Login: React.FC<LoginModalProps> = ({ open, handleClose }) => {
+export const LoginDialog: React.FC<LoginModalProps> = ({ open, handleClose }) => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const switchMode = () => {

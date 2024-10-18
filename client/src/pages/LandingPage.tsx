@@ -1,5 +1,4 @@
 import { Typography } from "@mui/material"
-import { Header } from "../components/header/Header"
 import { Link } from "react-router-dom"
 import "./LandingPage.css"
 import { CategoryCard } from "../components/card/CategoryCard"
@@ -11,7 +10,6 @@ import LandingPageProfilePic from "../assets/images/landing-page-profile-pic.png
 export const LandingPage = () => {
     return (
         <>
-            <Header displayTitle={false}/>
             <div className="gridContainer">
                 <div className="gridItemSpan3">
                     <Typography variant="h2" align="center">Dr. Alkawthar's Classroom</Typography>

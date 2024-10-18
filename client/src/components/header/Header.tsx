@@ -4,6 +4,7 @@ import { Login } from "@mui/icons-material";
 import { SideBar } from "../sidebar/SideBar";
 import { useState } from "react";
 import { Link } from "react-router-dom"
+import { LoginDialog } from "../login/LoginDialog";
 
 interface HeaderProps {
   displayTitle: boolean
@@ -12,9 +13,11 @@ interface HeaderProps {
 export const Header = ({displayTitle}: HeaderProps) => {
 
   const [openSideBar, setOpenSideBar] = useState(false);
+  const [openLoginDialog, setOpenLoginDialog] = useState(false);
 
   return (
     <>
+      <LoginDialog open={openLoginDialog} handleClose={() => setOpenLoginDialog(false)}/>
       <Box>
         <AppBar position="static">
             <Toolbar>
@@ -26,7 +29,7 @@ export const Header = ({displayTitle}: HeaderProps) => {
                 </Typography>}
                 <Box sx={{display: 'flex', flexDirection: "row", marginLeft: 'auto'}}>
                   <Button color="inherit">Courses</Button>
-                  <Button color="inherit" startIcon={<Login />} sx={{marginLeft: '15%'}}>Login</Button>
+                  <Button color="inherit" startIcon={<Login />} sx={{marginLeft: '15%'}} onClick={() => setOpenLoginDialog(true)}>Login</Button>
                 </Box>
             </Toolbar>
         </AppBar>

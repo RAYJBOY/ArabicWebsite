@@ -1,13 +1,11 @@
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/material"
 import ArabicPic from "../../../assets/images/islamicStudiesCourseHeader.jpg"
 import './ArabicCourse.css'
-import { Header } from "../../../components/header/Header"
 import { Link } from "react-router-dom"
 
 export const ArabicCourse = () => {
     return(
         <>
-            <Header displayTitle={true}/>
             <div className="arabicCourseGridContainer">
                 <div className="arabicCourseGridItemSpan2">
                     <Typography sx={{position:'absolute', color:'white', top: '5%', left: '2%'}} variant="h4">Arabic</Typography>

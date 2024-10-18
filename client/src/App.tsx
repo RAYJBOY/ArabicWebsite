@@ -22,12 +22,14 @@ import { QuranRecitationCourse } from "./pages/courses/quran/quran-course-detail
 import { QuranMemorizationCourse } from "./pages/courses/quran/quran-course-details/QuranMemorizationCourse";
 import { QuranTajweedCourse } from "./pages/courses/quran/quran-course-details/QuranTajweedCourse";
 import { EnrollmentPage } from "./pages/EnrollmentPage";
+import { Header } from "./components/header/Header";
 
 function App() {
 
   return (
     <div>
       <Router>
+        <Header displayTitle={true}/>
         <Routes>
           <Route path="/" element={<LandingPage/>}/>
           {/* All Arabic routes */}
