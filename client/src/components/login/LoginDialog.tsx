@@ -31,7 +31,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
     console.log("Username: ", username);
     console.log("Email: ", email);
     console.log("Password: ", password);
-    axios("http://localhost:5001/sign-up", {
+    axios("http://localhost:5001/users/sign-up", {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         data: JSON.stringify({ username, email, password }),
