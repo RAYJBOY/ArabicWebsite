@@ -22,22 +22,27 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
   const [username, setUsername] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [error, setError] = useState<null | string>(null);
+  const [errorCategory, setErrorCategory] = useState<string>();
 
   const switchMode = () => {
     setIsSignUp((prevIsSignUp) => !prevIsSignUp);
   };
 
   const handleSignUp = async () => {
-    console.log("Username: ", username);
-    console.log("Email: ", email);
-    console.log("Password: ", password);
     axios("http://localhost:5001/users/sign-up", {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         data: JSON.stringify({ username, email, password }),
       })
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
+      .then((response) => {
+        console.log(response);
+        handleClose();
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        setErrorCategory(error.response.data.category);
+      });
   };
 
   return (
@@ -45,6 +50,8 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
       <DialogTitle>{isSignUp ? "Sign Up" : "Sign In"}</DialogTitle>
       <DialogContent>
         <TextField
+          error={errorCategory === 'USERNAME'}
+          helperText={errorCategory === 'USERNAME' && error}
           required
           label="Username"
           variant="outlined"
@@ -56,6 +63,8 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
         />
         {isSignUp && (
           <TextField
+            error={errorCategory === 'EMAIL'}
+            helperText={errorCategory === 'EMAIL' && error}
             required
             type="email"
             label="Email"
