@@ -4,21 +4,22 @@ import { UserExistsError } from "../../utility/errors/userExistsError";
 import { UsernameExistsError } from "../../utility/errors/usernameExistsError";
 import { InvalidUserEmailError } from "../../utility/errors/invalidUserEmailError";
 import * as EmailValidator from "email-validator";
+import { genSalt, hash } from "bcrypt";
 
 const prisma = new PrismaClient();
 
 export const registerUser = async (user: User): Promise<User> => {
   // check if user already exists in db
-  const userEmailExists: boolean = !!await prisma.user.findFirst({
+  const userEmailExists: boolean = !!(await prisma.user.findFirst({
     where: {
       email: user.email,
     },
-  });
-  const usernameExists: boolean = !!await prisma.user.findFirst({
+  }));
+  const usernameExists: boolean = !!(await prisma.user.findFirst({
     where: {
       username: user.username,
     },
-  });
+  }));
 
   if (userEmailExists) {
     throw new UserExistsError("Account with that email already exists");
@@ -32,8 +33,17 @@ export const registerUser = async (user: User): Promise<User> => {
     throw new InvalidUserEmailError("Email is invalid");
   }
 
-  // assume all went well, user is new
-  const createdUser = await prisma.user.create({ data: user });
-  console.log("Created new user:", createdUser);
-  return createdUser;
+  try {
+    // hash the password
+    const salt = await genSalt();
+    const hashedPassword = await hash(user.password, salt);
+    user.password = hashedPassword;
+    // assume all went well, user is new
+    const createdUser = await prisma.user.create({ data: user });
+    console.log("Created new user:", createdUser);
+    return createdUser;
+  } catch (error) {
+    console.error("Error creating user in DB: ", error);
+    throw new Error(`Error creating user: ${error}`);
+  }
 };

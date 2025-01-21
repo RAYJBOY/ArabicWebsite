@@ -30,19 +30,32 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
   };
 
   const handleSignUp = async () => {
-    axios("http://localhost:5001/users/sign-up", {
-        method: 'POST',
+    try {
+      const response = await axios("http://localhost:5001/users/sign-up", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         data: JSON.stringify({ username, email, password }),
-      })
-      .then((response) => {
-        console.log(response);
-        handleClose();
-      })
-      .catch((error) => {
-        setError(error.response.data.message);
-        setErrorCategory(error.response.data.category);
       });
+      console.log(response);
+      handleClose();
+    } catch (error: any) {
+      setError(error.response.data.message);
+      setErrorCategory(error.response.data.category);
+    }
+  };
+
+  const handleSignIn = async () => {
+    try {
+      const response = await axios("http://localhost:5001/users/sign-in", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify({ username, password }),
+      });
+      console.log(response);
+    } catch (error: any) {
+      setError(error.response.data.message);
+      setErrorCategory(error.response.data.category);
+    }
   };
 
   return (
@@ -50,8 +63,8 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
       <DialogTitle>{isSignUp ? "Sign Up" : "Sign In"}</DialogTitle>
       <DialogContent>
         <TextField
-          error={errorCategory === 'USERNAME'}
-          helperText={errorCategory === 'USERNAME' && error}
+          error={errorCategory === "USERNAME"}
+          helperText={errorCategory === "USERNAME" && error}
           required
           label="Username"
           variant="outlined"
@@ -63,8 +76,8 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
         />
         {isSignUp && (
           <TextField
-            error={errorCategory === 'EMAIL'}
-            helperText={errorCategory === 'EMAIL' && error}
+            error={errorCategory === "EMAIL"}
+            helperText={errorCategory === "EMAIL" && error}
             required
             type="email"
             label="Email"
@@ -92,7 +105,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
             variant="contained"
             color="primary"
             fullWidth
-            onClick={handleSignUp}
+            onClick={isSignUp ? handleSignUp : handleSignIn}
           >
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>

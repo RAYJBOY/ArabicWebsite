@@ -25,6 +25,7 @@ export const userSignUp = async (req: Request, res: Response) => {
         category: "EMAIL",
       });
     }
+    res.status(400).json(error);
   }
   res.status(200).json(registeredUser);
 };
