@@ -3,11 +3,14 @@ import { registerUser } from "../../services/user/registerUser";
 import { UserExistsError } from "../../utility/errors/userExistsError";
 import { UsernameExistsError } from "../../utility/errors/usernameExistsError";
 import { InvalidUserEmailError } from "../../utility/errors/invalidUserEmailError";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export const userSignUp = async (req: Request, res: Response) => {
   let registeredUser;
   try {
-    registeredUser = await registerUser(req.body);
+    registeredUser = await registerUser(req.body, prisma);
   } catch (error) {
     if (error instanceof UserExistsError) {
       res.status(409).json({

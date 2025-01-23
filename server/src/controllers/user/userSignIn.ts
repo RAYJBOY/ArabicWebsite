@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
+import { loginUser } from "../../services/user/loginUser";
+import { LoginUserRequest } from "../../types/user";
+import { PrismaClient } from "@prisma/client";
 
-export const userSignIn = (req: Request, res: Response) => {
-    try {
-        
-    } catch(error) {
+const prisma = new PrismaClient();
 
-    }
-    console.log('Inside user sign in in BE');
-    res.status(200).json('hi');
-}
+export const userSignIn = async (req: Request, res: Response) => {
+  try {
+    const user: LoginUserRequest = req.body;
+    console.log('Got user in BE: ', user);
+    await loginUser(req, res, user, prisma);
+  } catch (error) {}
+  console.log("Inside user sign in in BE");
+};

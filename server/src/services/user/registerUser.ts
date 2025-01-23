@@ -6,9 +6,7 @@ import { InvalidUserEmailError } from "../../utility/errors/invalidUserEmailErro
 import * as EmailValidator from "email-validator";
 import { genSalt, hash } from "bcrypt";
 
-const prisma = new PrismaClient();
-
-export const registerUser = async (user: User): Promise<User> => {
+export const registerUser = async (user: User, prisma: PrismaClient): Promise<User> => {
   // check if user already exists in db
   const userEmailExists: boolean = !!(await prisma.user.findFirst({
     where: {
