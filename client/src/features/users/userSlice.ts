@@ -17,7 +17,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserAccessToken: (state: UserState, action: PayloadAction<UserState>) => {
-      console.log('HAMZA: passed in payload: ', action.payload);
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.token = action.payload.token;
