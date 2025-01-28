@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -8,6 +8,8 @@ import {
   Box,
 } from "@mui/material";
 import axios from "axios";
+import { setUserAccessToken, UserState } from "../../features/users/userSlice";
+import { useAppDispatch } from "../../hooks";
 
 type LoginModalProps = {
   open: boolean;
@@ -24,10 +26,19 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
   const [password, setPassword] = useState<string>();
   const [error, setError] = useState<null | string>(null);
   const [errorCategory, setErrorCategory] = useState<string>();
+  const [signedInUser, setSignedInUser] = useState<UserState | undefined>();
+
+  const dispatch = useAppDispatch();
 
   const switchMode = () => {
     setIsSignUp((prevIsSignUp) => !prevIsSignUp);
   };
+
+  useEffect(() => {
+    if(signedInUser) {
+      dispatch(setUserAccessToken(signedInUser))
+    }
+  }, [dispatch, signedInUser])
 
   const handleSignUp = async () => {
     try {
@@ -52,6 +63,14 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
         data: JSON.stringify({ username, password }),
       });
       console.log(response);
+      if (response.status === 200) {
+        setSignedInUser({
+          id: response.data.id,
+          name: response.data.username,
+          token: response.data.accessToken,
+        });
+      }
+      handleClose();
     } catch (error: any) {
       setError(error.response.data.message);
       setErrorCategory(error.response.data.category);

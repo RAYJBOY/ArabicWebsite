@@ -33,7 +33,7 @@ export const loginUser = async (
         { username: retrievedUser.username, userId: retrievedUser.id },
         process.env.DATABASE_URL
       );
-      res.json({ accessToken: accessToken });
+      res.json({ accessToken: accessToken, id: retrievedUser.id, username: retrievedUser.username });
     }
 
     console.log("In the BE, user exists: ", userExists);
