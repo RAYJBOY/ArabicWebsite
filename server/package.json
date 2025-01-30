@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "start": "node dist/src/index.js",
-    "build": "npx tsc"
+    "build": "npx tsc",
+    "populateCourseTable": "ts-node-dev ./src/utility/database/initialiseCourseTable.ts"
   },
   "keywords": [],
   "author": "",
