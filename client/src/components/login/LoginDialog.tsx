@@ -7,7 +7,7 @@ import {
   TextField,
   Box,
 } from "@mui/material";
-import axios from "axios";
+import instance from '../../axios-config';
 import { setUserAccessToken, UserState } from "../../features/users/userSlice";
 import { useAppDispatch } from "../../hooks";
 
@@ -42,7 +42,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
 
   const handleSignUp = async () => {
     try {
-      const response = await axios("http://localhost:5001/users/sign-up", {
+      const response = await instance("/users/sign-up", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         data: JSON.stringify({ username, email, password }),
@@ -57,7 +57,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
 
   const handleSignIn = async () => {
     try {
-      const response = await axios("http://localhost:5001/users/sign-in", {
+      const response = await instance("/users/sign-in", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         data: JSON.stringify({ username, password }),
@@ -72,8 +72,8 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
       }
       handleClose();
     } catch (error: any) {
-      setError(error.response.data.message);
-      setErrorCategory(error.response.data.category);
+      setError(error?.response?.data?.message);
+      setErrorCategory(error?.response?.data?.category);
     }
   };
 

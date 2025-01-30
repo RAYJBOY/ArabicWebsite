@@ -11,8 +11,6 @@ export const loginUser = async (
   user: LoginUserRequest,
   prisma: PrismaClient
 ) => {
-  console.log("Inside loginUser in BE");
-
   try {
     // get username and password from DB
     const retrievedUser = await prisma.user.findFirst({
