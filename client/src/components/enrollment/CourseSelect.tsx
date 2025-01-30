@@ -8,8 +8,12 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-export const CourseSelect = () => {
-  const [selectedCourse, setSelectedCourse] = useState("");
+interface CourseSelectProps {
+  selectedCourse: string,
+  setSelectedCourse: React.Dispatch<React.SetStateAction<string>>,
+}
+
+export const CourseSelect = ({setSelectedCourse, selectedCourse}: CourseSelectProps) => {
 
   const handleCourseSelect = (course: SelectChangeEvent) => {
     setSelectedCourse(course.target.value);
