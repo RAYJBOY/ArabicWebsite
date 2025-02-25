@@ -4,6 +4,8 @@ import "./EnrollmentPage.css";
 import { CourseSelect } from "../components/enrollment/CourseSelect";
 import { CourseDatePicker } from "../components/enrollment/CourseDatePicker";
 import dayjs, { Dayjs } from "dayjs";
+import instance from "../axios-config";
+import { store } from "../store";
 
 export const EnrollmentPage = () => {
   const [selectedCourse, setSelectedCourse] = useState("");
@@ -14,7 +16,7 @@ export const EnrollmentPage = () => {
   const [expiryDate, setExpiryDate] = useState<string>("");
   const [securityCode, setSecurityCode] = useState<string>("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Hello!");
     console.log("selected course: ", selectedCourse);
     console.log("date: ", date?.toString());
@@ -23,6 +25,17 @@ export const EnrollmentPage = () => {
     console.log("card number: ", cardNumber);
     console.log("expiry date: ", expiryDate);
     console.log("security: ", securityCode);
+    try {
+      const userId = store.getState().users.id;
+      const response = await instance("/enroll/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify({ userId: userId, course: selectedCourse, enrollmentDate: date })
+      })
+      console.log("Response", response);
+    } catch (error: any) {
+      console.error(error);
+    }
   };
 
   return (

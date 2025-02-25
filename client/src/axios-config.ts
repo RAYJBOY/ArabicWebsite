@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useAppSelector } from "./hooks";
 import { store } from "./store";
 
 const instance = axios.create({
@@ -17,6 +16,7 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.log('HAMZA, got rejected')
     return Promise.reject(error);
   }
 );

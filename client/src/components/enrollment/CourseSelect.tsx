@@ -6,7 +6,6 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from "@mui/material";
-import { useState } from "react";
 
 interface CourseSelectProps {
   selectedCourse: string,
@@ -41,25 +40,25 @@ export const CourseSelect = ({setSelectedCourse, selectedCourse}: CourseSelectPr
           }}
         >
           <ListSubheader>Arabic</ListSubheader>
-          <MenuItem value="Beginner">Beginner</MenuItem>
-          <MenuItem value="Advanced">Advanced</MenuItem>
-          <MenuItem value="Quranic Arabic Words">Quranic Arabic Words</MenuItem>
-          <MenuItem value="Conversation">Conversation</MenuItem>
-          <MenuItem value="Level 1">Level 1</MenuItem>
-          <MenuItem value="Level 2">Level 2</MenuItem>
-          <MenuItem value="Level 3">Level 3</MenuItem>
+          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Beginner"})}>Beginner</MenuItem>
+          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Advanced"})}>Advanced</MenuItem>
+          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Quranic Arabic Words"})}>Quranic Arabic Words</MenuItem>
+          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Conversation"})}>Conversation</MenuItem>
+          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Level 1"})}>Level 1</MenuItem>
+          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Level 2"})}>Level 2</MenuItem>
+          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Level 3"})}>Level 3</MenuItem>
           <ListSubheader>Islamic Studies</ListSubheader>
-          <MenuItem value="Fiqh">Fiqh</MenuItem>
-          <MenuItem value="Seera">Seera</MenuItem>
-          <MenuItem value="Hadeeth">Hadeeth</MenuItem>
-          <MenuItem value="Aqeeda">Aqeeda</MenuItem>
-          <MenuItem value="Tafseer">Tafseer</MenuItem>
-          <MenuItem value="Islamic History">Islamic History</MenuItem>
+          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Fiqh"})}>Fiqh</MenuItem>
+          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Seera"})}>Seera</MenuItem>
+          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Hadeeth"})}>Hadeeth</MenuItem>
+          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Aqeeda"})}>Aqeeda</MenuItem>
+          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Tafseer"})}>Tafseer</MenuItem>
+          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Islamic History"})}>Islamic History</MenuItem>
           <ListSubheader>Quran</ListSubheader>
-          <MenuItem value="How To Read">How To Read</MenuItem>
-          <MenuItem value="Recitation">Recitation</MenuItem>
-          <MenuItem value="Memorization">Memorization</MenuItem>
-          <MenuItem value="Tajweed">Tajweed</MenuItem>
+          <MenuItem value={JSON.stringify({category: "quran", courseName: "How To Read"})}>How To Read</MenuItem>
+          <MenuItem value={JSON.stringify({category: "quran", courseName: "Recitation"})}>Recitation</MenuItem>
+          <MenuItem value={JSON.stringify({category: "quran", courseName: "Memorization"})}>Memorization</MenuItem>
+          <MenuItem value={JSON.stringify({category: "quran", courseName: "Tajweed"})}>Tajweed</MenuItem>
         </Select>
       </FormControl>
     </>
