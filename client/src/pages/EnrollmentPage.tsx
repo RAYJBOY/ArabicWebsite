@@ -58,9 +58,6 @@ export const EnrollmentPage = () => {
                   setSelectedCourse={setSelectedCourse}
                 />
               </Grid2>
-              <Grid2 size={4}>
-                <CourseDatePicker date={date} setDate={setDate} />
-              </Grid2>
             </Grid2>
 
             <Grid2 container spacing={2}>
@@ -130,9 +127,12 @@ export const EnrollmentPage = () => {
               </Grid2>
             </Grid2>
 
-            <Grid2>
+            <Grid2 container spacing={2}>
+              <Button variant="contained" onClick={() => {}}>
+                Select Date & Time
+              </Button>
               <Button variant="contained" onClick={handleSubmit}>
-                Submit
+                Next
               </Button>
             </Grid2>
           </Stack>

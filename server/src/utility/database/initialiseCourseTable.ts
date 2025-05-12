@@ -31,6 +31,7 @@ const COURSES: CourseCategories = {
 
 export const initialiseCourseTable = async () => {
   try {
+    await prisma.course.deleteMany({});
     for (const category in COURSES) {
       for (const course of COURSES[category as keyof CourseCategories]) {
         console.log('Creating entry in db: ');
@@ -41,6 +42,7 @@ export const initialiseCourseTable = async () => {
             courseName: course,
             category: category,
             description: "Test description",
+            price: 50,
           },
         });
       }

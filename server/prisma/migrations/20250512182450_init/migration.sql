@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `course` MODIFY `price` INTEGER NOT NULL DEFAULT 50;
