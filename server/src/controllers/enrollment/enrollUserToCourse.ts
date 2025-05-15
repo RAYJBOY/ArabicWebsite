@@ -5,6 +5,7 @@ import { enrollUser } from "../../services/enrollment/enrollUser";
 const prisma = new PrismaClient();
 
 export const enrollUserToCourse = async (req: Request, res: Response) => {
+  console.log('HAMZA: got requestin in BE: ', req.body);
   try {
     const enrolled = await enrollUser(JSON.parse(req.body.course).courseName, JSON.parse(req.body.course).category, prisma);
     res.status(200).json(enrolled)
