@@ -5,9 +5,9 @@ import { enrollUser } from "../../services/enrollment/enrollUser";
 const prisma = new PrismaClient();
 
 export const enrollUserToCourse = async (req: Request, res: Response) => {
-  console.log('HAMZA: got requestin in BE: ', req.body);
+  console.log('HAMZA: got request in BE: ', req.body);
   try {
-    const enrolled = await enrollUser(JSON.parse(req.body.course).courseName, JSON.parse(req.body.course).category, prisma);
+    const enrolled = await enrollUser(JSON.parse(req.body.course).courseName, JSON.parse(req.body.course).category, req.body.classesInAMonth, req.body.userId, prisma);
     res.status(200).json(enrolled)
   } catch (error) {
     res.status(500).json({

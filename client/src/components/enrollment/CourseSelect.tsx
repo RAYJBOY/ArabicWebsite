@@ -40,25 +40,25 @@ export const CourseSelect = ({setSelectedCourse, selectedCourse}: CourseSelectPr
           }}
         >
           <ListSubheader>Arabic</ListSubheader>
-          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Beginner"})}>Beginner</MenuItem>
-          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Advanced"})}>Advanced</MenuItem>
-          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Quranic Arabic Words"})}>Quranic Arabic Words</MenuItem>
-          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Conversation"})}>Conversation</MenuItem>
-          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Level 1"})}>Level 1</MenuItem>
-          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Level 2"})}>Level 2</MenuItem>
-          <MenuItem value={JSON.stringify({category: "arabic", courseName: "Level 3"})}>Level 3</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Arabic", courseName: "Beginner"})}>Beginner</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Arabic", courseName: "Advanced"})}>Advanced</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Arabic", courseName: "Quranic Arabic Words"})}>Quranic Arabic Words</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Arabic", courseName: "Conversation"})}>Conversation</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Arabic", courseName: "Level 1"})}>Level 1</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Arabic", courseName: "Level 2"})}>Level 2</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Arabic", courseName: "Level 3"})}>Level 3</MenuItem>
           <ListSubheader>Islamic Studies</ListSubheader>
-          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Fiqh"})}>Fiqh</MenuItem>
-          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Seera"})}>Seera</MenuItem>
-          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Hadeeth"})}>Hadeeth</MenuItem>
-          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Aqeeda"})}>Aqeeda</MenuItem>
-          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Tafseer"})}>Tafseer</MenuItem>
-          <MenuItem value={JSON.stringify({category: "islamicStudies", courseName: "Islamic History"})}>Islamic History</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Islamic Studies", courseName: "Fiqh"})}>Fiqh</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Islamic Studies", courseName: "Seera"})}>Seera</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Islamic Studies", courseName: "Hadeeth"})}>Hadeeth</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Islamic Studies", courseName: "Aqeeda"})}>Aqeeda</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Islamic Studies", courseName: "Tafseer"})}>Tafseer</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Islamic Studies", courseName: "Islamic History"})}>Islamic History</MenuItem>
           <ListSubheader>Quran</ListSubheader>
-          <MenuItem value={JSON.stringify({category: "quran", courseName: "How To Read"})}>How To Read</MenuItem>
-          <MenuItem value={JSON.stringify({category: "quran", courseName: "Recitation"})}>Recitation</MenuItem>
-          <MenuItem value={JSON.stringify({category: "quran", courseName: "Memorization"})}>Memorization</MenuItem>
-          <MenuItem value={JSON.stringify({category: "quran", courseName: "Tajweed"})}>Tajweed</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Quran", courseName: "How To Read"})}>How To Read</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Quran", courseName: "Recitation"})}>Recitation</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Quran", courseName: "Memorization"})}>Memorization</MenuItem>
+          <MenuItem value={JSON.stringify({category: "Quran", courseName: "Tajweed"})}>Tajweed</MenuItem>
         </Select>
       </FormControl>
     </>

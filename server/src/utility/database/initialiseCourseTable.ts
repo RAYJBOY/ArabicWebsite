@@ -3,13 +3,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 type CourseCategories = {
-    arabic: string[];
-    islamicStudies: string[];
-    quran: string[];
+    'Arabic': string[];
+    'Islamic Studies': string[];
+    'Quran': string[];
   };
 
 const COURSES: CourseCategories = {
-  arabic: [
+  'Arabic': [
     "Beginner",
     "Advanced",
     "Quranic Arabic Words",
@@ -18,7 +18,7 @@ const COURSES: CourseCategories = {
     "Level 2",
     "Level 3",
   ],
-  islamicStudies: [
+  'Islamic Studies': [
     "Fiqh",
     "Seera",
     "Hadeeth",
@@ -26,7 +26,7 @@ const COURSES: CourseCategories = {
     "Tafseer",
     "Islamic History",
   ],
-  quran: ["How To Read", "Recitation", "Memorization", "Tajweed"],
+  'Quran': ["How To Read", "Recitation", "Memorization", "Tajweed"],
 };
 
 export const initialiseCourseTable = async () => {

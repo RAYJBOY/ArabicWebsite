@@ -25,6 +25,7 @@ import { EnrollmentPage } from "./pages/EnrollmentPage";
 import { Header } from "./components/header/Header";
 import { Provider } from "react-redux";
 import { store } from "./store"
+import { MyCourses } from "./pages/MyCourses";
 
 function App() {
   return (
@@ -101,6 +102,7 @@ function App() {
 
             {/* Enrollment route */}
             <Route path="/enroll" element={<EnrollmentPage />} />
+            <Route path="/myCourses" element={<MyCourses />} />
           </Routes>
         </Router>
       </div>
