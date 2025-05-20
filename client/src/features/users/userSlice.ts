@@ -3,26 +3,27 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface UserState {
   id: string | undefined;
   name: string | undefined;
-  token: string | undefined;
+  isAuthenticated?: boolean;
 }
 
 const initialState: UserState = {
   id: undefined,
   name: undefined,
-  token: undefined,
+  isAuthenticated: false,
 };
 
 const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    setUserAccessToken: (state: UserState, action: PayloadAction<UserState>) => {
+    signIn: (state: UserState, action: PayloadAction<UserState>) => {
+      console.log('HAMZA: got action: ', action);
       state.id = action.payload.id;
       state.name = action.payload.name;
-      state.token = action.payload.token;
+      state.isAuthenticated = true;
     },
   },
 });
 
-export const { setUserAccessToken } = userSlice.actions;
+export const { signIn } = userSlice.actions;
 export default userSlice.reducer;

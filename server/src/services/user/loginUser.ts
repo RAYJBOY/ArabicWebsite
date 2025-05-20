@@ -12,6 +12,9 @@ export const loginUser = async (
   prisma: PrismaClient
 ) => {
   try {
+    if (!user?.username || !user?.password) {
+      return res.status(400).json({ error: 'Username is required' });
+    }
     // get username and password from DB
     const retrievedUser = await prisma.user.findFirst({
       where: {
@@ -23,17 +26,23 @@ export const loginUser = async (
       throw new Error("Cannot find user");
     }
 
-    const userExists = await compare(user.password, retrievedUser.password);
+    const passwordMatches = await compare(user.password, retrievedUser.password);
+    const emailMatches = user.username === retrievedUser.username;
+    const userExists = passwordMatches && emailMatches;
 
     if (userExists) {
-      // make a jwt token and store it in the users browser
+      // create a jwt token
       const accessToken = jwt.sign(
         { username: retrievedUser.username, userId: retrievedUser.id },
-        process.env.DATABASE_URL
+        process.env.ACCESS_TOKEN_SECRET
       );
-      res.json({ accessToken: accessToken, id: retrievedUser.id, username: retrievedUser.username });
+      res.cookie('access_token', accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+      })
+      res.json({ id: retrievedUser.id, username: retrievedUser.username });
     }
-
     console.log("In the BE, user exists: ", userExists);
   } catch (error) {
     console.error("Error checking user in DB: ", error);

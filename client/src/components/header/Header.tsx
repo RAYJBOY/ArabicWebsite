@@ -13,7 +13,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LoginDialog } from "../login/LoginDialog";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { setUserAccessToken } from "../../features/users/userSlice";
+import { signIn } from "../../features/users/userSlice";
+import instance from "../../axios-config";
 
 interface HeaderProps {
   displayTitle: boolean;
@@ -25,9 +26,10 @@ export const Header = ({ displayTitle }: HeaderProps) => {
   const userId = useAppSelector((state) => state.users.id);
   const dispatch = useAppDispatch();
 
-  const handleUserLogout = () => {
+  const handleUserLogout = async () => {
+    await instance.post('/users/sign-out');
     dispatch(
-      setUserAccessToken({ id: undefined, token: undefined, name: undefined })
+      signIn({ id: undefined, name: undefined })
     );
   };
 

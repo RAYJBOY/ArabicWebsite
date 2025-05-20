@@ -8,7 +8,7 @@ import {
   Box,
 } from "@mui/material";
 import instance from '../../axios-config';
-import { setUserAccessToken, UserState } from "../../features/users/userSlice";
+import { signIn, UserState } from "../../features/users/userSlice";
 import { useAppDispatch } from "../../hooks";
 
 type LoginModalProps = {
@@ -36,7 +36,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
 
   useEffect(() => {
     if(signedInUser) {
-      dispatch(setUserAccessToken(signedInUser))
+      dispatch(signIn(signedInUser))
     }
   }, [dispatch, signedInUser])
 
@@ -67,7 +67,6 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
         setSignedInUser({
           id: response.data.id,
           name: response.data.username,
-          token: response.data.accessToken,
         });
       }
       handleClose();

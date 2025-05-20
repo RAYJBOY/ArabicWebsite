@@ -1,22 +1,17 @@
 import axios from "axios";
-import { store } from "./store";
 
 const instance = axios.create({
   baseURL: "http://localhost:5001",
+  withCredentials: true
 });
 
 
 instance.interceptors.request.use(
   (config) => {
     // Add request interceptors here
-    const accessToken = store.getState().users.token;
-    if (accessToken) {
-      config.headers['Authorization'] = `Bearer ${accessToken}`;
-    }
     return config;
   },
   (error) => {
-    console.log('HAMZA, got rejected')
     return Promise.reject(error);
   }
 );

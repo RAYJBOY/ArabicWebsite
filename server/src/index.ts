@@ -4,11 +4,16 @@ import cors from 'cors';
 import express, { Request, Response , Application } from 'express';
 import userRoutes from './routes/userRoutes';
 import enrollmentRoutes from './routes/enrollmentRoutes'
+import cookieParser from 'cookie-parser'
 
 const app: Application = express();
 const prisma = new PrismaClient();
 
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 app.use(bodyParser.json());
 
 app.use('/users', userRoutes);
