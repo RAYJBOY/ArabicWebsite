@@ -7,7 +7,7 @@ import {
   TextField,
   Box,
 } from "@mui/material";
-import instance from '../../axios-config';
+import instance from "../../axios-config";
 import { signIn, UserState } from "../../features/users/userSlice";
 import { useAppDispatch } from "../../hooks";
 
@@ -35,10 +35,10 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
   };
 
   useEffect(() => {
-    if(signedInUser) {
-      dispatch(signIn(signedInUser))
+    if (signedInUser) {
+      dispatch(signIn(signedInUser));
     }
-  }, [dispatch, signedInUser])
+  }, [signedInUser]);
 
   const handleSignUp = async () => {
     try {

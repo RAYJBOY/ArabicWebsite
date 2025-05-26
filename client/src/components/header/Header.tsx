@@ -15,6 +15,7 @@ import { LoginDialog } from "../login/LoginDialog";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { signIn } from "../../features/users/userSlice";
 import instance from "../../axios-config";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   displayTitle: boolean;
@@ -25,6 +26,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const userId = useAppSelector((state) => state.users.id);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleUserLogout = async () => {
     await instance.post('/users/sign-out');
@@ -59,7 +61,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
             <Box
               sx={{ display: "flex", flexDirection: "row", marginLeft: "auto" }}
             >
-              <Button color="inherit">Courses</Button>
+              <Button color="inherit" onClick={() => navigate('/')}>Courses</Button>
               {!userId && (
                 <Button
                   color="inherit"
