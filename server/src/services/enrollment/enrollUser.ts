@@ -45,12 +45,12 @@ export const enrollUser = async (
         userId: userId,
         courseName: courseName,
         courseCategory: courseCategory,
+        courseId: foundCourse.id,
         classesInAMonth: classesInAMonth,
       },
       success_url: process.env.PAYMENT_SUCCESS_URL,
       cancel_url: process.env.PAYMENT_CANCELLED_URL,
     });
-
     return { url: session.url };
   } catch (error) {
     console.error("Error enrolling user: ", error);
