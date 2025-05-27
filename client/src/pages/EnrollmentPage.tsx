@@ -1,25 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Grid2, Stack, TextField, Typography } from "@mui/material";
 import "./EnrollmentPage.css";
 import { CourseSelect } from "../components/enrollment/CourseSelect";
 import instance from "../axios-config";
-import { store } from "../store";
 import { CourseDaySelector } from "../components/enrollment/CourseDaySelector";
 import { StripePaymentPage } from "./StripePaymentPage";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { getCurrentUser } from "../utilities/user";
+import { UserState } from "../features/users/userSlice";
+import { LoginDialog } from "../components/login/LoginDialog";
 
 const stripePromise = loadStripe(
   "pk_test_51QwVGGF9QzhEDzRPU479FxXKx5pozBPgAY6rnFToYxwfxi9H8eHQl7pCWR1c4q1fJgZBuxyxnrIUCJqW1jecxc1F00RxchXA0x"
 );
 
 export const EnrollmentPage = () => {
+  const [currentUser, setCurrentUser] = useState<UserState>();
   const [selectedCourse, setSelectedCourse] = useState("");
   const [numberOfCourseDays, setNumberOfCourseDays] = useState<number>();
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [showPaymentPage, setShowPaymentPage] = useState(false);
   const [clientSecret, setClientSecret] = useState();
+  const [showUnauthScreen, setShowUnauthScreen] = useState(false);
+
+  useEffect(() => {
+    const getSignedInUser = async () => {
+      try {
+        const user = await getCurrentUser();
+        setCurrentUser(user);
+      } catch (error: any) {
+        console.error("Error trying to get sign in user: ", error);
+        if (error.response.data.category === 'AUTHORISATION') {
+          setShowUnauthScreen(true);
+        }
+      }
+    };
+    getSignedInUser();
+  }, []);
 
   const handleSubmit = async () => {
     console.log("Hello!");
@@ -28,21 +47,32 @@ export const EnrollmentPage = () => {
     console.log("first name: ", firstName);
     console.log("last name: ", lastName);
     try {
-      const userId = store.getState().users.id;
       const response = await instance("/enroll/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         data: JSON.stringify({
-          userId: userId,
+          userId: currentUser?.id,
           course: selectedCourse,
           classesInAMonth: numberOfCourseDays,
         }),
       });
       window.location.href = response.data.url;
     } catch (error: any) {
+      if (error.response.data.category === 'AUTHORISATION') {
+          setShowUnauthScreen(true);
+      }
       console.error(error);
     }
   };
+
+  if (showUnauthScreen) {
+    return (
+      <LoginDialog
+        open={true}
+        handleClose={() => ({})}
+      />
+    );
+  }
 
   return (
     <>
@@ -52,9 +82,18 @@ export const EnrollmentPage = () => {
         </Typography>
       </div>
       {showPaymentPage && clientSecret && (
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <div style={{width: '50%'}}>
-            <Elements stripe={stripePromise} options={{clientSecret: clientSecret}}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ width: "50%" }}>
+            <Elements
+              stripe={stripePromise}
+              options={{ clientSecret: clientSecret }}
+            >
               <StripePaymentPage />
             </Elements>
           </div>

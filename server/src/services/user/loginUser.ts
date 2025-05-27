@@ -13,7 +13,7 @@ export const loginUser = async (
 ) => {
   try {
     if (!user?.username || !user?.password) {
-      return res.status(400).json({ error: 'Username is required' });
+      return res.status(400).json({ error: "Username is required" });
     }
     // get username and password from DB
     const retrievedUser = await prisma.user.findFirst({
@@ -26,7 +26,10 @@ export const loginUser = async (
       throw new Error("Cannot find user");
     }
 
-    const passwordMatches = await compare(user.password, retrievedUser.password);
+    const passwordMatches = await compare(
+      user.password,
+      retrievedUser.password
+    );
     const emailMatches = user.username === retrievedUser.username;
     const userExists = passwordMatches && emailMatches;
 
@@ -34,13 +37,37 @@ export const loginUser = async (
       // create a jwt token
       const accessToken = jwt.sign(
         { username: retrievedUser.username, userId: retrievedUser.id },
-        process.env.ACCESS_TOKEN_SECRET
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || "15m" }
       );
-      res.cookie('access_token', accessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+
+      // create refresh token
+      const refreshToken = jwt.sign(
+        { userId: retrievedUser.id },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || "30d" }
+      );
+
+      // store longer lasting token in DB
+      prisma.user.update({
+        where: { id: retrievedUser.id },
+        data: { refreshToken },
       })
+
+      res.cookie("access_token", accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 15 * 60 * 1000 // 15 mins
+      });
+
+      res.cookie("refresh_token", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 30 * 1000 * 60 * 60 * 24 // 30 days
+      });
+
       res.json({ id: retrievedUser.id, username: retrievedUser.username });
     }
     console.log("In the BE, user exists: ", userExists);

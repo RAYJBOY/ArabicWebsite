@@ -10,5 +10,6 @@ router.post('/sign-up', userSignUp);
 router.post('/sign-in', userSignIn);
 router.post('/sign-out', userSignOut);
 router.get('/getCurrentUser', getCurrentUser);
+router.get('/auth')
 
 export default router;
