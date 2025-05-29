@@ -27,7 +27,6 @@ export const authenticateToken = (
     };
 
     req.user = decoded;
-    console.log('HAMZA: middleware succeeded');
     next();
   } catch (err) {
     console.error("JWT verification failed:", err);

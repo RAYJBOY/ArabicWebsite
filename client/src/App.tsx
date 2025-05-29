@@ -26,7 +26,7 @@ import { Header } from "./components/header/Header";
 import { MyCourses } from "./pages/MyCourses";
 import { useAppDispatch } from "./hooks";
 import { getCurrentUser } from "./utilities/user";
-import { signIn } from "./features/users/userSlice";
+import { signIn, UserState } from "./features/users/userSlice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ function App() {
     const fetchUser = async () => {
       try {
         const user = await getCurrentUser();
-        dispatch(signIn(user));
+        dispatch(signIn(user as UserState));
       } catch (error) {
         console.log('HAMZA: error: ', error);
         dispatch(

@@ -2,9 +2,8 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "http://localhost:5001",
-  withCredentials: true
+  withCredentials: true,
 });
-
 
 instance.interceptors.request.use(
   (config) => {
@@ -21,8 +20,20 @@ instance.interceptors.response.use(
     // Add response interceptors here
     return response;
   },
-  (error) => {
+  async (error) => {
     // Handle error responses
+    if (error.response.data.message === "Access token missing" || error.response.data.message === "No JWT token in header") {
+      // If the access token is missing, try to refresh it
+      try {
+        await instance.post("/auth/refresh", {}, { withCredentials: true });
+        // Retry the original request after refreshing the token
+        // Error config is the original request that failed
+        return instance.request(error.config);
+      } catch (refreshError) {
+        console.error("Error refreshing token:", refreshError);
+        // If refreshing fails, reject the original error
+      }
+    }
     return Promise.reject(error);
   }
 );

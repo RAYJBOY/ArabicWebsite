@@ -33,43 +33,51 @@ export const loginUser = async (
     const emailMatches = user.username === retrievedUser.username;
     const userExists = passwordMatches && emailMatches;
 
-    if (userExists) {
-      // create a jwt token
-      const accessToken = jwt.sign(
-        { username: retrievedUser.username, userId: retrievedUser.id },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || "15m" }
-      );
-
-      // create refresh token
-      const refreshToken = jwt.sign(
-        { userId: retrievedUser.id },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || "30d" }
-      );
-
-      // store longer lasting token in DB
-      prisma.user.update({
-        where: { id: retrievedUser.id },
-        data: { refreshToken },
-      })
-
-      res.cookie("access_token", accessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 15 * 60 * 1000 // 15 mins
+    if (!userExists) {
+      return res.status(401).json({
+        message: "Invalid username or password",
+        category: "AUTHORISATION",
       });
-
-      res.cookie("refresh_token", refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 30 * 1000 * 60 * 60 * 24 // 30 days
-      });
-
-      res.json({ id: retrievedUser.id, username: retrievedUser.username });
     }
+
+    // create a jwt token
+    const accessToken = jwt.sign(
+      { username: retrievedUser.username, userId: retrievedUser.id },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || "15m" }
+    );
+
+    // create refresh token
+    const refreshToken = jwt.sign(
+      { userId: retrievedUser.id },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || "30d" }
+    );
+
+    // store longer lasting token in DB
+    await prisma.user.update({
+      where: { id: retrievedUser.id },
+      data: { 
+        refreshToken: refreshToken
+      },
+    });
+
+    res.cookie("access_token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000, // 15 mins
+    });
+
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 30 * 1000 * 60 * 60 * 24, // 30 days
+    });
+
+    res.json({ id: retrievedUser.id, username: retrievedUser.username });
+
     console.log("In the BE, user exists: ", userExists);
   } catch (error) {
     console.error("Error checking user in DB: ", error);

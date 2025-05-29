@@ -61,7 +61,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
             <Box
               sx={{ display: "flex", flexDirection: "row", marginLeft: "auto" }}
             >
-              <Button color="inherit" onClick={() => navigate('/')}>Courses</Button>
+              {userId && <Button sx={{ width: '100%' }} color="inherit" onClick={() => navigate('/myCourses')}>My Courses</Button>}
               {!userId && (
                 <Button
                   color="inherit"

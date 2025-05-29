@@ -7,7 +7,10 @@ const prisma = new PrismaClient();
 export const refreshToken = async (req: Request, res: Response) => {
   try {
     await handleRefreshToken(req, res, prisma);
-    res.status(200).json({message: 'Access token refreshed'});
+    if (res.headersSent) {
+      return; // If headers are already sent, exit early to avoid further processing
+    }
+    res.status(200).json({ message: "Access token refreshed" });
   } catch (error) {
     res.status(500).json({
       message: `Something went wrong getting user's courses - ${error}`,

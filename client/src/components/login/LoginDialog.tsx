@@ -118,6 +118,11 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
             setPassword(input.target.value)
           }
         />
+        {error && (
+          <Box sx={{ mt: 2, color: "red" }}>
+            <p>{error}</p>
+          </Box>
+        )}
         <Box sx={{ mt: 2 }}>
           <Button
             variant="contained"

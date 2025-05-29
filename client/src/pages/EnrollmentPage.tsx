@@ -8,15 +8,15 @@ import { StripePaymentPage } from "./StripePaymentPage";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { getCurrentUser } from "../utilities/user";
-import { UserState } from "../features/users/userSlice";
 import { LoginDialog } from "../components/login/LoginDialog";
+import { User } from "../types/user";
 
 const stripePromise = loadStripe(
   "pk_test_51QwVGGF9QzhEDzRPU479FxXKx5pozBPgAY6rnFToYxwfxi9H8eHQl7pCWR1c4q1fJgZBuxyxnrIUCJqW1jecxc1F00RxchXA0x"
 );
 
 export const EnrollmentPage = () => {
-  const [currentUser, setCurrentUser] = useState<UserState>();
+  const [currentUser, setCurrentUser] = useState<User>();
   const [selectedCourse, setSelectedCourse] = useState("");
   const [numberOfCourseDays, setNumberOfCourseDays] = useState<number>();
   const [firstName, setFirstName] = useState<string>("");
@@ -32,7 +32,7 @@ export const EnrollmentPage = () => {
         setCurrentUser(user);
       } catch (error: any) {
         console.error("Error trying to get sign in user: ", error);
-        if (error.response.data.category === 'AUTHORISATION') {
+        if (error.response.data.category === "AUTHORISATION") {
           setShowUnauthScreen(true);
         }
       }
@@ -41,11 +41,6 @@ export const EnrollmentPage = () => {
   }, []);
 
   const handleSubmit = async () => {
-    console.log("Hello!");
-    console.log("selected course: ", selectedCourse);
-    console.log("Number of days selected for course: ", numberOfCourseDays);
-    console.log("first name: ", firstName);
-    console.log("last name: ", lastName);
     try {
       const response = await instance("/enroll/checkout", {
         method: "POST",
@@ -58,9 +53,7 @@ export const EnrollmentPage = () => {
       });
       window.location.href = response.data.url;
     } catch (error: any) {
-      if (error.response.data.category === 'AUTHORISATION') {
-          setShowUnauthScreen(true);
-      }
+      setShowUnauthScreen(true);
       console.error(error);
     }
   };
@@ -68,8 +61,8 @@ export const EnrollmentPage = () => {
   if (showUnauthScreen) {
     return (
       <LoginDialog
-        open={true}
-        handleClose={() => ({})}
+        open={showUnauthScreen}
+        handleClose={() => setShowUnauthScreen(false)}
       />
     );
   }

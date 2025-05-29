@@ -5,7 +5,7 @@ export const getCurrentUser = (req: Request, res: Response) => {
   const token = req.cookies.access_token;
   if (!token) {
     res.status(401).json({
-      message: "No JWT token in header.",
+      message: "No JWT token in header",
       category: "AUTHORISATION",
     });
     return;

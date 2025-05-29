@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "../utilities/user";
-import { UserState } from "../features/users/userSlice";
 import instance from "../axios-config";
 import { EnrolledCourses } from "../types/course";
+import { User } from "../types/user";
 
 export const useMyCourses = () => {
-  const [currentUser, setCurrentUser] = useState<UserState>();
+  const [currentUser, setCurrentUser] = useState<User>();
   const [error, setError] = useState<string>();
   const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourses[]>([]);
 
   useEffect(() => {
-    const getLoggedInUser = async () => {
+    const getUserInfo = async () => {
       try {
         const loggedInUser = await getCurrentUser();
         if (loggedInUser.id) {
@@ -20,8 +20,9 @@ export const useMyCourses = () => {
               userId: loggedInUser.id,
             },
           });
-          console.log("HAMZA: got user courses: ", userCourses);
+          console.log("User courses: ", userCourses);
           const formattedCourses = userCourses.data.map((userCourse: any) => ({
+            courseId: userCourse.courseId,
             courseName: userCourse.courseName,
             numberOfMonthlyClasses: userCourse.classesInAMonth,
             dateOfPayment: userCourse.createdAt,
@@ -34,7 +35,7 @@ export const useMyCourses = () => {
         setError(error.response.data.message);
       }
     };
-    getLoggedInUser();
+    getUserInfo();
   }, []);
 
   return { currentUser, enrolledCourses, error };

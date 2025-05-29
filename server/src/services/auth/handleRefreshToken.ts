@@ -11,7 +11,7 @@ export const handleRefreshToken = async (
     const refreshToken = req.cookies.refresh_token;
 
     if (!refreshToken) {
-      return res.status(401).json({ error: "Refresh token missing" });
+      res.status(401).json({ error: "Refresh token missing" });
     }
 
     // 1. Verify token
@@ -19,9 +19,8 @@ export const handleRefreshToken = async (
     try {
       payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!);
     } catch (err) {
-      return res
-        .status(403)
-        .json({ error: "Invalid or expired refresh token" });
+      res.status(403).json({ error: "Invalid or expired refresh token" });
+      return;
     }
 
     // 2. Get user from DB
@@ -30,7 +29,8 @@ export const handleRefreshToken = async (
     });
 
     if (!user || user.refreshToken !== refreshToken) {
-      return res.status(403).json({ error: "Refresh token does not match" });
+      res.status(403).json({ error: "Refresh token does not match" });
+      return;
     }
 
     // 3. Generate new access token
@@ -40,14 +40,14 @@ export const handleRefreshToken = async (
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || "15m" }
     );
 
-     res.cookie("access_token", newAccessToken, {
+    res.cookie("access_token", newAccessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000 // 15 mins
+      maxAge: 15 * 60 * 1000, // 15 mins
     });
 
-    return res.status(200).json({ message: "Access token refreshed" });
+    res.status(200).json({ message: "Access token refreshed" });
   } catch (error) {
     console.error("Error refreshing token: ", error);
     res.status(500).json({ error: "Internal server error from backend" });

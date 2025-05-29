@@ -23,6 +23,7 @@ export const handleStripeWebhooks = async (
   }
 
   if (event.type === "checkout.session.completed") {
+    console.log("HAMZA: Checkout session completed event received.");
     const session = event.data.object as Stripe.Checkout.Session;
 
     if (!session.metadata) {
