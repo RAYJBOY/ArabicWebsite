@@ -13,9 +13,10 @@ import { Link } from "react-router-dom";
 interface SideBarProps {
   openSideBar: boolean
   setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>
+  handleUserLogout: () => Promise<void>
 }
 
-export const SideBar = ({openSideBar, setOpenSideBar}: SideBarProps) => {
+export const SideBar = ({openSideBar, setOpenSideBar, handleUserLogout}: SideBarProps) => {
 
   const [expand, setExpand] = useState(false);
 
@@ -75,12 +76,23 @@ export const SideBar = ({openSideBar, setOpenSideBar}: SideBarProps) => {
         </Collapse>
 
         <ListItem>
-        <Link to="/enroll" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
+        <Link to="/myCourses" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
             <ListItemButton>
               <ListItemIcon>
                 <SubscriptionsIcon/>
               </ListItemIcon>
-              <ListItemText primary="My Enrollments" />
+              <ListItemText primary="My Courses" />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+
+        <ListItem>
+          <Link to="/contact" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
+            <ListItemButton>
+              <ListItemIcon>
+                <ContactPageIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Contact Us" />
             </ListItemButton>
           </Link>
         </ListItem>
@@ -88,18 +100,9 @@ export const SideBar = ({openSideBar, setOpenSideBar}: SideBarProps) => {
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <ContactPageIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Contact Us" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
               <LogoutIcon/>
             </ListItemIcon>
-            <ListItemText primary="Log Out" />
+            <ListItemText primary="Log Out" onClick={handleUserLogout} />
           </ListItemButton>
         </ListItem>
       </List>

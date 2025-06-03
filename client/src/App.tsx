@@ -27,6 +27,7 @@ import { MyCourses } from "./pages/MyCourses";
 import { useAppDispatch } from "./hooks";
 import { getCurrentUser } from "./utilities/user";
 import { signIn, UserState } from "./features/users/userSlice";
+import { ContactUsPage } from "./pages/ContactUsPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -115,6 +116,9 @@ function App() {
           {/* Enrollment route */}
           <Route path="/enroll" element={<EnrollmentPage />} />
           <Route path="/myCourses" element={<MyCourses />} />
+
+          {/* Contact Us route */}
+          <Route path="/contact" element={<ContactUsPage/>}/>
         </Routes>
       </Router>
     </div>

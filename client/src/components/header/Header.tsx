@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { signIn } from "../../features/users/userSlice";
 import instance from "../../axios-config";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../../utilities/user";
+import { getCurrentUser, logoutUser } from "../../utilities/user";
 
 interface HeaderProps {
   displayTitle: boolean;
@@ -31,10 +31,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
 
   const handleUserLogout = async () => {
     try {
-      const user = await getCurrentUser();
-      await instance.post('/users/sign-out', {
-        userId: user.id,
-      });
+      await logoutUser();
       dispatch(
         signIn({ id: undefined, name: undefined })
       );
@@ -94,7 +91,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
           </Toolbar>
         </AppBar>
       </Box>
-      <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} />
+      <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} handleUserLogout={handleUserLogout}/>
     </>
   );
 };
