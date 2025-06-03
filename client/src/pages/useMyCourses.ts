@@ -27,6 +27,7 @@ export const useMyCourses = () => {
             numberOfMonthlyClasses: userCourse.classesInAMonth,
             dateOfPayment: userCourse.createdAt,
             paymentAmount: userCourse.classesInAMonth * 5,
+            subscriptionId: userCourse.subscriptionId,
           }));
           setEnrolledCourses(formattedCourses);
         }

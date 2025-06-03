@@ -34,12 +34,15 @@ export const handleStripeWebhooks = async (
 
     const { userId, courseId, classesInAMonth } = session.metadata;
 
+    const subscriptionId = session.subscription as string;
+
     try {
       await prisma.enrollment.create({
         data: {
           userId: userId,
           courseId: courseId,
           classesInAMonth: Number(classesInAMonth),
+          stripeSubscriptionId: subscriptionId,
         },
       });
       console.log("Enrollment created for user: ", userId);

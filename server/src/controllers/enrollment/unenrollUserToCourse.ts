@@ -1,10 +1,16 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import Stripe from "stripe";
 
 const prisma = new PrismaClient();
 
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: "2025-02-24.acacia",
+  typescript: true,
+});
+
 export const unenrollUserFromCourse = async (req: Request, res: Response) => {
-  const { userId, courseId } = req.body;
+  const { userId, courseId, subscriptionId } = req.body;
 
   console.log("Unenroll request received with userId:", userId, "and courseId:", courseId);
 
@@ -14,6 +20,7 @@ export const unenrollUserFromCourse = async (req: Request, res: Response) => {
       where: {
         userId: userId,
         courseId: courseId,
+        stripeSubscriptionId: subscriptionId,
       },
     });
 
@@ -26,6 +33,9 @@ export const unenrollUserFromCourse = async (req: Request, res: Response) => {
       });
       return;
     }
+
+    // Cancel the user's subscription on Stripe
+    await stripe.subscriptions.cancel(subscriptionId);
 
     // Unenroll the user from the course
     await prisma.enrollment.delete({

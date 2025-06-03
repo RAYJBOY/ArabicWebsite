@@ -35,6 +35,7 @@ function App() {
     const fetchUser = async () => {
       try {
         const user = await getCurrentUser();
+        console.log('HAMZA: got user: ', user);
         dispatch(signIn(user as UserState));
       } catch (error) {
         console.log('HAMZA: error: ', error);

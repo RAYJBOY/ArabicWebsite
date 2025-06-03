@@ -27,11 +27,14 @@ export const enrollUser = async (
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      mode: "payment",
+      mode: "subscription",
       line_items: [
         {
           price_data: {
             currency: "GBP",
+            recurring: {
+              interval: "month",
+            },
             product_data: {
               name: `${courseCategory} - ${courseName}`,
               description: `${classesInAMonth} classes in a month.`,

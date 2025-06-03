@@ -2,12 +2,14 @@ import instance from "../axios-config";
 
 export const handleUserUnenrollment = async (
   userId: string,
-  courseId: string
+  courseId: string,
+  subscriptionId: string,
 ) => {
   try {
     const response = await instance.post("/enroll/unenroll", {
       userId,
       courseId,
+      subscriptionId
     });
     console.log("Unenrollment successful:", response.data);
   } catch (error: any) {

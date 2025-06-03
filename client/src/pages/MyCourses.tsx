@@ -27,9 +27,9 @@ export const MyCourses = () => {
     return <div>Please log in to view your courses.</div>;
   }
 
-  const handleUnenroll = async (courseId: string) => {
+  const handleUnenroll = async (courseId: string, subscriptionId: string) => {
     try {
-      await handleUserUnenrollment(currentUser.id, courseId);
+      await handleUserUnenrollment(currentUser.id, courseId, subscriptionId);
       const userCourses = await instance.get("/enroll/getAllUserCourses", {
         params: {
           userId: currentUser.id,
@@ -72,7 +72,7 @@ export const MyCourses = () => {
               <TableCell>
                 <Button
                   variant="contained"
-                  onClick={() => handleUnenroll(enrolledCourse.courseId)}
+                  onClick={() => handleUnenroll(enrolledCourse.courseId, enrolledCourse.subscriptionId)}
                 >
                   Unenroll
                 </Button>
