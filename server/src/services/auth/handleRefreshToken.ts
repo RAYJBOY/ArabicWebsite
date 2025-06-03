@@ -12,6 +12,7 @@ export const handleRefreshToken = async (
 
     if (!refreshToken) {
       res.status(401).json({ error: "Refresh token missing" });
+      return;
     }
 
     // 1. Verify token

@@ -1,11 +1,25 @@
 import { Request, Response } from "express";
+import { logoutUser } from "../../services/user/logoutUser";
+import { PrismaClient } from "@prisma/client";
 
-export const userSignOut = (req: Request, res: Response) => {
-  res.cookie('access_token', '', {
-    httpOnly: true,
-    expires: new Date(0), // expire immediately
-    sameSite: 'lax',      // match your cookie settings
-    secure: process.env.NODE_ENV === 'production',
-  });
-  res.sendStatus(200);
+const prisma = new PrismaClient();
+
+export const userSignOut = async (req: Request, res: Response) => {
+  try {
+    await logoutUser(req, res, prisma);
+  } catch (error) {
+    console.error("Error during user sign out:", error);
+    if (error instanceof Error) {
+      res
+        .status(500)
+        .json({ message: error.message, category: "AUTHORISATION" });
+    } else {
+      res
+        .status(500)
+        .json({
+          message: "An unexpected error occurred",
+          category: "AUTHORISATION",
+        });
+    }
+  }
 };

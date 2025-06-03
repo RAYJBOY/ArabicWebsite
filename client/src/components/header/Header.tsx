@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { signIn } from "../../features/users/userSlice";
 import instance from "../../axios-config";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from "../../utilities/user";
 
 interface HeaderProps {
   displayTitle: boolean;
@@ -29,10 +30,17 @@ export const Header = ({ displayTitle }: HeaderProps) => {
   const navigate = useNavigate();
 
   const handleUserLogout = async () => {
-    await instance.post('/users/sign-out');
-    dispatch(
-      signIn({ id: undefined, name: undefined })
-    );
+    try {
+      const user = await getCurrentUser();
+      await instance.post('/users/sign-out', {
+        userId: user.id,
+      });
+      dispatch(
+        signIn({ id: undefined, name: undefined })
+      );
+    } catch (error) {
+      console.error("Error during user logout:", error);
+    }
   };
 
   return (
