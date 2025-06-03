@@ -1,61 +1,82 @@
-import { Box, Collapse, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
-import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
-import SearchIcon from '@mui/icons-material/Search';
-import SchoolIcon from '@mui/icons-material/School';
+import {
+  Box,
+  Collapse,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ContactPageIcon from "@mui/icons-material/ContactPage";
+import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
+import SearchIcon from "@mui/icons-material/Search";
+import SchoolIcon from "@mui/icons-material/School";
 import { useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 interface SideBarProps {
-  openSideBar: boolean
-  setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>
-  handleUserLogout: () => Promise<void>
+  openSideBar: boolean;
+  setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+  handleUserLogout: () => Promise<void>;
 }
 
-export const SideBar = ({openSideBar, setOpenSideBar, handleUserLogout}: SideBarProps) => {
-
+export const SideBar = ({
+  openSideBar,
+  setOpenSideBar,
+  handleUserLogout,
+}: SideBarProps) => {
   const [expand, setExpand] = useState(false);
 
   const expandCategory = () => {
     setExpand(!expand);
-  }
+  };
 
   const sideBarList = (
-    <Box>
+    <Box sx={{ minWidth: 260 }}>
       <List>
         <ListItem>
           <ListItemButton onClick={expandCategory}>
             <ListItemIcon>
-              <SearchIcon/>
+              <SearchIcon />
             </ListItemIcon>
             <ListItemText primary="Explore" />
-            {expand ? <ExpandLess/> : <ExpandMore/>}
+            {expand ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
         </ListItem>
 
         <Collapse in={expand} timeout="auto" unmountOnExit>
           <List component="div">
             <ListItem>
-              <Link to="/arabic" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
-                <ListItemButton sx={{paddingLeft: 5, width: "100%"}}>
+              <Link
+                to="/arabic"
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  width: "100%",
+                }}
+              >
+                <ListItemButton sx={{ paddingLeft: 5, width: "100%" }}>
                   <ListItemIcon>
-                    <RecordVoiceOverIcon/>
+                    <RecordVoiceOverIcon />
                   </ListItemIcon>
                   <ListItemText primary="Arabic" />
                 </ListItemButton>
               </Link>
-              
             </ListItem>
 
             <ListItem>
-              <Link to="/islamicstudies" style={{ textDecoration: 'none', color: 'black' }}>
-                <ListItemButton sx={{paddingLeft: 5}}>
+              <Link
+                to="/islamicstudies"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <ListItemButton sx={{ paddingLeft: 5 }}>
                   <ListItemIcon>
-                    <SchoolIcon/>
+                    <SchoolIcon />
                   </ListItemIcon>
                   <ListItemText primary="Islamic Studies" />
                 </ListItemButton>
@@ -63,10 +84,17 @@ export const SideBar = ({openSideBar, setOpenSideBar, handleUserLogout}: SideBar
             </ListItem>
 
             <ListItem>
-            <Link to="/quran" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
-                <ListItemButton sx={{paddingLeft: 5}}>
+              <Link
+                to="/quran"
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  width: "100%",
+                }}
+              >
+                <ListItemButton sx={{ paddingLeft: 5 }}>
                   <ListItemIcon>
-                    <MenuBookIcon/>
+                    <MenuBookIcon />
                   </ListItemIcon>
                   <ListItemText primary="Quran" />
                 </ListItemButton>
@@ -76,10 +104,13 @@ export const SideBar = ({openSideBar, setOpenSideBar, handleUserLogout}: SideBar
         </Collapse>
 
         <ListItem>
-        <Link to="/myCourses" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
+          <Link
+            to="/myCourses"
+            style={{ textDecoration: "none", color: "black", width: "100%" }}
+          >
             <ListItemButton>
               <ListItemIcon>
-                <SubscriptionsIcon/>
+                <SubscriptionsIcon />
               </ListItemIcon>
               <ListItemText primary="My Courses" />
             </ListItemButton>
@@ -87,10 +118,13 @@ export const SideBar = ({openSideBar, setOpenSideBar, handleUserLogout}: SideBar
         </ListItem>
 
         <ListItem>
-          <Link to="/contact" style={{ textDecoration: 'none', color: 'black', width: "100%" }}>
+          <Link
+            to="/contact"
+            style={{ textDecoration: "none", color: "black", width: "100%" }}
+          >
             <ListItemButton>
               <ListItemIcon>
-                <ContactPageIcon/>
+                <ContactPageIcon />
               </ListItemIcon>
               <ListItemText primary="Contact Us" />
             </ListItemButton>
@@ -100,18 +134,20 @@ export const SideBar = ({openSideBar, setOpenSideBar, handleUserLogout}: SideBar
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <LogoutIcon/>
+              <LogoutIcon />
             </ListItemIcon>
             <ListItemText primary="Log Out" onClick={handleUserLogout} />
           </ListItemButton>
         </ListItem>
       </List>
     </Box>
-  )
+  );
 
-  return <div>
-    <Drawer open={openSideBar} onClose={() => setOpenSideBar(false)}>
-      {sideBarList}
-    </Drawer>
-  </div>;
+  return (
+    <div>
+      <Drawer open={openSideBar} onClose={() => setOpenSideBar(false)}>
+        {sideBarList}
+      </Drawer>
+    </div>
+  );
 };
