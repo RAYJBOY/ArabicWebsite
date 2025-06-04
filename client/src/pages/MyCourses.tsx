@@ -1,10 +1,12 @@
 import {
   Button,
   Table,
+  TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { useMyCourses } from "./useMyCourses";
 import { handleUserUnenrollment } from "../utilities/enrollment";
@@ -50,6 +52,9 @@ export const MyCourses = () => {
 
   return (
     <>
+      <Typography variant="h3" align="center" sx={{ margin: "1%" }}>
+        My Courses
+      </Typography>
       <TableContainer>
         <Table>
           <TableHead>
@@ -61,24 +66,31 @@ export const MyCourses = () => {
               <TableCell>Manage Subscription</TableCell>
             </TableRow>
           </TableHead>
-          {enrolledCourses.map((enrolledCourse) => (
-            <TableRow>
-              <TableCell>{enrolledCourse.courseName}</TableCell>
-              <TableCell>{enrolledCourse.numberOfMonthlyClasses}</TableCell>
-              <TableCell>
-                {new Date(enrolledCourse.dateOfPayment).toLocaleDateString()}
-              </TableCell>
-              <TableCell>£{enrolledCourse.paymentAmount}</TableCell>
-              <TableCell>
-                <Button
-                  variant="contained"
-                  onClick={() => handleUnenroll(enrolledCourse.courseId, enrolledCourse.subscriptionId)}
-                >
-                  Unenroll
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          <TableBody>
+            {enrolledCourses.map((enrolledCourse) => (
+              <TableRow>
+                <TableCell>{enrolledCourse.courseName}</TableCell>
+                <TableCell>{enrolledCourse.numberOfMonthlyClasses}</TableCell>
+                <TableCell>
+                  {new Date(enrolledCourse.dateOfPayment).toLocaleDateString()}
+                </TableCell>
+                <TableCell>£{enrolledCourse.paymentAmount}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      handleUnenroll(
+                        enrolledCourse.courseId,
+                        enrolledCourse.subscriptionId
+                      )
+                    }
+                  >
+                    Unenroll
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
     </>

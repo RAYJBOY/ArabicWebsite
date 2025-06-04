@@ -22,6 +22,8 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
 }) => {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const [username, setUsername] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [error, setError] = useState<null | string>(null);
@@ -45,7 +47,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
       const response = await instance("/users/sign-up", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        data: JSON.stringify({ username, email, password }),
+        data: JSON.stringify({ firstName, lastName, username, email, password }),
       });
       console.log(response);
       handleClose();
@@ -80,6 +82,36 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{isSignUp ? "Sign Up" : "Sign In"}</DialogTitle>
       <DialogContent>
+        {isSignUp && (
+          <TextField
+            error={errorCategory === "First Name"}
+            helperText={errorCategory === "First Name" && error}
+            required
+            type="firstName"
+            label="First Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            onChange={(input: React.ChangeEvent<HTMLInputElement>) =>
+              setFirstName(input.target.value)
+            }
+          />
+        )}
+        {isSignUp && (
+          <TextField
+            error={errorCategory === "Last Name"}
+            helperText={errorCategory === "Last Name" && error}
+            required
+            type="lastName"
+            label="Last Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            onChange={(input: React.ChangeEvent<HTMLInputElement>) =>
+              setLastName(input.target.value)
+            }
+          />
+        )}
         <TextField
           error={errorCategory === "USERNAME"}
           helperText={errorCategory === "USERNAME" && error}

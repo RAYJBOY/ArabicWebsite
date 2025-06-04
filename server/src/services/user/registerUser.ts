@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { User } from "../../types/user";
+import { User, UserRole } from "../../types/user";
 import { UserExistsError } from "../../utility/errors/userExistsError";
 import { UsernameExistsError } from "../../utility/errors/usernameExistsError";
 import { InvalidUserEmailError } from "../../utility/errors/invalidUserEmailError";
@@ -39,7 +39,10 @@ export const registerUser = async (user: User, prisma: PrismaClient): Promise<Us
     // assume all went well, user is new
     const createdUser = await prisma.user.create({ data: user });
     console.log("Created new user:", createdUser);
-    return createdUser;
+    return {
+      ...createdUser,
+      role: createdUser.role as UserRole
+    };
   } catch (error) {
     console.error("Error creating user in DB: ", error);
     throw new Error(`Error creating user: ${error}`);

@@ -28,15 +28,20 @@ import { useAppDispatch } from "./hooks";
 import { getCurrentUser } from "./utilities/user";
 import { signIn, UserState } from "./features/users/userSlice";
 import { ContactUsPage } from "./pages/ContactUsPage";
+import { MyStudents } from "./pages/MyStudents";
+import { User } from "./types/user";
 
 function App() {
   const dispatch = useAppDispatch();
+
+  const [user, setUser] = React.useState<User | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const user = await getCurrentUser();
         console.log('HAMZA: got user: ', user);
+        setUser(user);
         dispatch(signIn(user as UserState));
       } catch (error) {
         console.log('HAMZA: error: ', error);
@@ -119,6 +124,9 @@ function App() {
 
           {/* Contact Us route */}
           <Route path="/contact" element={<ContactUsPage/>}/>
+
+          {/* Admin routes */}
+          {user?.isAdmin && <Route path="/myStudents" element={<MyStudents />} />}
         </Routes>
       </Router>
     </div>

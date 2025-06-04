@@ -9,3 +9,12 @@ export interface Enrollment {
 export interface EnrollmentWithCourseName extends Enrollment {
   courseName: string;
 }
+
+
+export interface EnrollmentWithUserDetails {
+  classesInAMonth: number;
+  createdAt: Date;
+  email: string;
+  courseName: string;
+  studentName?: string;
+}

@@ -17,18 +17,22 @@ export const userSignUp = async (req: Request, res: Response) => {
         message: "Account with that email already exists. Please sign in.",
         category: "EMAIL",
       });
+      return;
     } else if (error instanceof UsernameExistsError) {
       res.status(409).json({
         message: "Username is taken. Please choose a diferent username.",
         category: "USERNAME",
       });
+      return;
     } else if (error instanceof InvalidUserEmailError) {
       res.status(400).json({
         message: "Invalid email. Please enter a valid email.",
         category: "EMAIL",
       });
+      return;
     }
     res.status(400).json(error);
+    return;
   }
   res.status(200).json(registeredUser);
 };
