@@ -10,6 +10,7 @@ import {
 import instance from "../../axios-config";
 import { signIn, UserState } from "../../features/users/userSlice";
 import { useAppDispatch } from "../../hooks";
+import { UserRole } from "../../types/user";
 
 type LoginModalProps = {
   open: boolean;
@@ -69,6 +70,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
         setSignedInUser({
           id: response.data.id,
           name: response.data.username,
+          isAdmin: response.data.role === UserRole.ADMIN,
         });
       }
       handleClose();

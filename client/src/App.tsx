@@ -46,7 +46,7 @@ function App() {
       } catch (error) {
         console.log('HAMZA: error: ', error);
         dispatch(
-          signIn({ id: undefined, name: undefined, isAuthenticated: false })
+          signIn({ id: undefined, name: undefined, isAdmin: undefined })
         );
       }
     };
@@ -120,7 +120,7 @@ function App() {
 
           {/* Enrollment route */}
           <Route path="/enroll" element={<EnrollmentPage />} />
-          <Route path="/myCourses" element={<MyCourses />} />
+          {!user?.isAdmin && <Route path="/myCourses" element={<MyCourses />} />}
 
           {/* Contact Us route */}
           <Route path="/contact" element={<ContactUsPage/>}/>

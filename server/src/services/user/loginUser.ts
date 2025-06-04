@@ -76,7 +76,7 @@ export const loginUser = async (
       maxAge: 30 * 1000 * 60 * 60 * 24, // 30 days
     });
 
-    res.json({ id: retrievedUser.id, username: retrievedUser.username });
+    res.json({ id: retrievedUser.id, username: retrievedUser.username, role: retrievedUser.role });
 
     console.log("In the BE, user exists: ", userExists);
   } catch (error) {

@@ -3,3 +3,8 @@ export interface User {
     name: string;
     isAdmin: boolean;
 }
+
+export enum UserRole {
+    USER = 'USER',
+    ADMIN = 'ADMIN',
+}

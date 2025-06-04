@@ -14,9 +14,8 @@ import { Link } from "react-router-dom";
 import { LoginDialog } from "../login/LoginDialog";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { signIn } from "../../features/users/userSlice";
-import instance from "../../axios-config";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser, logoutUser } from "../../utilities/user";
+import { logoutUser } from "../../utilities/user";
 
 interface HeaderProps {
   displayTitle: boolean;
@@ -33,8 +32,9 @@ export const Header = ({ displayTitle }: HeaderProps) => {
     try {
       await logoutUser();
       dispatch(
-        signIn({ id: undefined, name: undefined })
+        signIn({ id: undefined, name: undefined, isAdmin: undefined })
       );
+      navigate("/");
     } catch (error) {
       console.error("Error during user logout:", error);
     }
