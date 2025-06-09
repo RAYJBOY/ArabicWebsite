@@ -22,14 +22,13 @@ export const getAllEnrollmentsFromDb = async (
             category: true,
           },
         },
-        classesInAMonth: true,
         createdAt: true,
       },
     });
     const allEnrollmentsWithUserDetails: EnrollmentWithUserDetails[] =
       allEnrollments.map((enrollment) => ({
         studentName: `${enrollment.user.firstName} ${enrollment.user.lastName}`,
-        classesInAMonth: enrollment.classesInAMonth,
+        classesInAMonth: 5,
         createdAt: enrollment.createdAt,
         email: enrollment.user.email,
         courseName: `${enrollment.course.category} - ${enrollment.course.courseName}`,

@@ -6,7 +6,8 @@
     "dev": "nodemon src/index.ts",
     "start": "node dist/src/index.js",
     "build": "npx tsc",
-    "populateCourseTable": "ts-node-dev ./src/utility/database/initialiseCourseTable.ts"
+    "populateCourseTable": "ts-node-dev ./src/utility/database/initialiseCourseTable.ts",
+    "clearEnrollmentTable": "ts-node-dev ./src/utility/database/clearEnrollmentTable.ts"
   },
   "keywords": [],
   "author": "",

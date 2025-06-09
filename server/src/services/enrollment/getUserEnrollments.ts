@@ -14,7 +14,6 @@ export const getUserEnrollments = async (
         id: true,
         userId: true,
         courseId: true,
-        classesInAMonth: true,
         stripeSubscriptionId: true,
         course: {
           select: {
@@ -30,7 +29,6 @@ export const getUserEnrollments = async (
         userId: foundCourse.userId,
         courseId: foundCourse.courseId,
         courseName: foundCourse.course.courseName,
-        classesInAMonth: foundCourse.classesInAMonth,
         subscriptionId: foundCourse.stripeSubscriptionId,
         createdAt: foundCourse.createdAt,
       };

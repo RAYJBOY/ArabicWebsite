@@ -2,7 +2,6 @@ export interface Enrollment {
   id: string;
   userId: string;
   courseId: string;
-  classesInAMonth: number;
   createdAt: Date;
 }
 

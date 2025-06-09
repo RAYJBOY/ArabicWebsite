@@ -21,7 +21,6 @@ import { QuranHowToReadCourse } from "./pages/courses/quran/quran-course-details
 import { QuranRecitationCourse } from "./pages/courses/quran/quran-course-details/QuranRecitationCourse";
 import { QuranMemorizationCourse } from "./pages/courses/quran/quran-course-details/QuranMemorizationCourse";
 import { QuranTajweedCourse } from "./pages/courses/quran/quran-course-details/QuranTajweedCourse";
-import { EnrollmentPage } from "./pages/EnrollmentPage";
 import { Header } from "./components/header/Header";
 import { MyCourses } from "./pages/MyCourses";
 import { useAppDispatch } from "./hooks";
@@ -30,6 +29,7 @@ import { signIn, UserState } from "./features/users/userSlice";
 import { ContactUsPage } from "./pages/ContactUsPage";
 import { MyStudents } from "./pages/MyStudents";
 import { User } from "./types/user";
+import { ChooseDay } from "./pages/ChooseDay";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -119,7 +119,7 @@ function App() {
           <Route path="/quran/tajweed" element={<QuranTajweedCourse />} />
 
           {/* Enrollment route */}
-          <Route path="/enroll" element={<EnrollmentPage />} />
+          <Route path="/enroll" element={<ChooseDay />} />
           {!user?.isAdmin && <Route path="/myCourses" element={<MyCourses />} />}
 
           {/* Contact Us route */}
