@@ -1,6 +1,0 @@
-model RecurringBookingDay {
-    id                 String     @id @default(uuid())
-    recurringBooking   Enrollment @relation(fields: [recurringBookingId], references: [id])
-    recurringBookingId String
-    dayOfWeek          Int // 0 = Sunday, 6 = Saturday
-}

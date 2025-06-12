@@ -17,21 +17,32 @@ export interface ChosenTime {
 }
 
 export const ChooseDay = () => {
-  const [chosenSessions, setChosenSessions] = useState<ChosenTime[]>([]);
+  const [chosenSessions, setChosenSessions] = useState<ChosenTime[]>([
+    {} as ChosenTime,
+  ]);
+
   return (
     <>
       <Typography variant="h3" align="center">
         Choose preferred day for classes
       </Typography>
-      <Stack spacing={2} width={"10%"}>
-        {Array.from({ length: chosenSessions.length }).map((_, index) => (
-          <Chip
-            label={
-              chosenSessions[index].day + "s at " + chosenSessions[index].time
-            }
-            key={index}
-          />
-        ))}
+      <Stack
+        spacing={2}
+        direction={"row"}
+        justifyContent="center"
+        sx={{ marginTop: 2 }}
+      >
+        {chosenSessions.map((chosenSession, index) => {
+          if (Object.keys(chosenSession).length === 0) {
+            return null; // Skip empty sessions
+          }
+          return (
+            <Chip
+              label={chosenSession.day + "s at " + chosenSession.time}
+              key={index}
+            />
+          );
+        })}
       </Stack>
       <Box
         sx={{
@@ -42,12 +53,17 @@ export const ChooseDay = () => {
         }}
       >
         <List sx={{ width: "70%" }}>
-          <ListItem>
-            <DayAndTimeSelector
-              chosenSessions={chosenSessions}
-              setChosenSessions={setChosenSessions}
-            />
-          </ListItem>
+          {chosenSessions.map((chosenSession, index) => {
+            return (
+              <ListItem>
+                <DayAndTimeSelector
+                  chosenSession={chosenSession}
+                  setChosenSessions={setChosenSessions}
+                  chosenSessions={chosenSessions}
+                />
+              </ListItem>
+            );
+          })}
         </List>
       </Box>
     </>

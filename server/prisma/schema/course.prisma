@@ -6,5 +6,5 @@ model Course {
     price       Int          @default(50)
     createdAt   DateTime     @default(now())
     updatedAt   DateTime     @updatedAt
-    enrollments Enrollment[]
+    enrollments Enrollment[] //used to link enrollments to courses
 }

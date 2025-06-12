@@ -1,16 +1,25 @@
+enum DayOfWeek {
+    MONDAY
+    TUESDAY
+    WEDNESDAY
+    THURSDAY
+    FRIDAY
+    SATURDAY
+    SUNDAY
+}
+
 model Enrollment {
     id                   String                @id @default(uuid())
     user                 User                  @relation(fields: [userId], references: [id])
     userId               String
     course               Course                @relation(fields: [courseId], references: [id])
     courseId             String
-    daysOfWeek           RecurringBookingDay[]
     startTime            String
     endTime              String
-    startDate            DateTime
-    stripeSubscriptionId String?               @unique
+    dayOfWeek            DayOfWeek
+    stripeSubscriptionId String
     createdAt            DateTime              @default(now())
     updatedAt            DateTime              @updatedAt
 
-    @@unique([userId, courseId])
+    @@unique([userId, courseId, dayOfWeek])
 }

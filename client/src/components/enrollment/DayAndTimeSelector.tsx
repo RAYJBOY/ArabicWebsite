@@ -14,6 +14,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
 
 interface DayAndTimeSelectorProps {
+  chosenSession: { day: string; time: string };
   chosenSessions: { day: string; time: string }[];
   setChosenSessions: React.Dispatch<
     React.SetStateAction<{ day: string; time: string }[]>
@@ -21,6 +22,7 @@ interface DayAndTimeSelectorProps {
 }
 
 export const DayAndTimeSelector = ({
+  chosenSession,
   chosenSessions,
   setChosenSessions,
 }: DayAndTimeSelectorProps) => {
@@ -44,9 +46,11 @@ export const DayAndTimeSelector = ({
     setDayError("");
     setTimeError("");
     setChosenSessions([
-      ...chosenSessions,
       { day: dayOfTheWeek, time: time ? time.format("HH:mm") : "" },
+      ...chosenSessions,
     ]);
+    setDayOfTheWeek("");
+    setTime(null);
   };
 
   const daysOfWeek = [
@@ -61,48 +65,44 @@ export const DayAndTimeSelector = ({
 
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
-      {Array.from({ length: chosenSessions.length + 1 }).map((_, index) => (
-        <Stack direction={"row"} spacing={2} sx={{ width: "100%" }}>
-          <FormControl sx={{ width: "100%" }} error={!!dayError}>
-            <InputLabel id="day-select-label">Select Day</InputLabel>
-            <Select
-              label="Select Day"
-              labelId="day-select-label"
-              onChange={(e) => setDayOfTheWeek(e.target.value)}
-              value={chosenSessions[index]?.day}
-            >
-              {daysOfWeek.map((day) => (
-                <MenuItem key={day} value={day}>
-                  {day}
-                </MenuItem>
-              ))}
-            </Select>
-            <FormHelperText>{dayError}</FormHelperText>
-          </FormControl>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker
-              label="Select a time"
-              sx={{ width: "100%" }}
-              onChange={(time) => setTime(time)}
-              value={
-                chosenSessions[index]?.time
-                  ? dayjs(chosenSessions[index].time, "HH:mm")
-                  : null
-              }
-              onError={(error) => setTimeError(error ? "Invalid time" : "")}
-              slotProps={{
-                textField: {
-                  error: !!timeError,
-                  helperText: timeError,
-                },
-              }}
-            />
-          </LocalizationProvider>
-          <Button sx={{ width: "20%" }} onClick={handleAddClass}>
-            Add class
-          </Button>
-        </Stack>
-      ))}
+      <Stack direction={"row"} spacing={2} sx={{ width: "100%" }}>
+        <FormControl sx={{ width: "100%" }} error={!!dayError}>
+          <InputLabel id="day-select-label">Select Day</InputLabel>
+          <Select
+            label="Select Day"
+            labelId="day-select-label"
+            onChange={(e) => setDayOfTheWeek(e.target.value)}
+            value={chosenSession.day ?? dayOfTheWeek ?? ""}
+          >
+            {daysOfWeek.map((day) => (
+              <MenuItem key={day} value={day}>
+                {day}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>{dayError}</FormHelperText>
+        </FormControl>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <TimePicker
+            label="Select a time"
+            sx={{ width: "100%" }}
+            onChange={(time) => setTime(time)}
+            value={
+              chosenSession.time ? dayjs(chosenSession.time, "HH:mm") : null
+            }
+            onError={(error) => setTimeError(error ? "Invalid time" : "")}
+            slotProps={{
+              textField: {
+                error: !!timeError,
+                helperText: timeError,
+              },
+            }}
+          />
+        </LocalizationProvider>
+        <Button sx={{ width: "20%" }} onClick={handleAddClass}>
+          Add class
+        </Button>
+      </Stack>
     </Stack>
   );
 };
