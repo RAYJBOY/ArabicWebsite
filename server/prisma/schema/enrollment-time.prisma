@@ -1,0 +1,10 @@
+model EnrollmentTime {
+    id           String     @id @default(uuid())
+    dayOfTheWeek DayOfWeek
+    startTime    String
+    endTime      String
+    enrollment   Enrollment @relation(fields: [enrollmentId], references: [id])
+    enrollmentId String
+    createdAt    DateTime   @default(now())
+    updatedAt    DateTime   @updatedAt
+}

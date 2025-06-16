@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Chip,
   FormControl,
@@ -12,6 +13,7 @@ import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 interface DayAndTimeSelectorProps {
   chosenSession: { day: string; time: string };
@@ -51,6 +53,17 @@ export const DayAndTimeSelector = ({
     ]);
     setDayOfTheWeek("");
     setTime(null);
+  };
+
+  const handleDeleteClass = () => {
+    const updatedSessions = chosenSessions.filter(
+      (session) =>
+        session.day !== chosenSession.day || session.time !== chosenSession.time
+    );
+    setChosenSessions(updatedSessions);
+    setDayOfTheWeek("");
+    setTime(null);
+    setChosenSessions(updatedSessions);
   };
 
   const daysOfWeek = [
@@ -99,9 +112,19 @@ export const DayAndTimeSelector = ({
             }}
           />
         </LocalizationProvider>
-        <Button sx={{ width: "20%" }} onClick={handleAddClass}>
-          Add class
-        </Button>
+        {chosenSession.day && chosenSession.time && (
+          <Button
+            sx={{ width: "20%", textAlign: "center" }}
+            onClick={handleDeleteClass}
+          >
+            <DeleteOutlineIcon sx={{ fontSize: 35 }} />
+          </Button>
+        )}
+        {!chosenSession.day && !chosenSession.time && (
+          <Button sx={{ width: "20%" }} onClick={handleAddClass}>
+            Add class
+          </Button>
+        )}
       </Stack>
     </Stack>
   );

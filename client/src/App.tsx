@@ -29,7 +29,7 @@ import { signIn, UserState } from "./features/users/userSlice";
 import { ContactUsPage } from "./pages/ContactUsPage";
 import { MyStudents } from "./pages/MyStudents";
 import { User } from "./types/user";
-import { ChooseDay } from "./pages/ChooseDay";
+import { ChooseSessions } from "./pages/ChooseSessions";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -119,7 +119,7 @@ function App() {
           <Route path="/quran/tajweed" element={<QuranTajweedCourse />} />
 
           {/* Enrollment route */}
-          <Route path="/enroll" element={<ChooseDay />} />
+          <Route path="/enroll" element={<ChooseSessions />} />
           {!user?.isAdmin && <Route path="/myCourses" element={<MyCourses />} />}
 
           {/* Contact Us route */}

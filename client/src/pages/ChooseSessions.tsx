@@ -16,10 +16,20 @@ export interface ChosenTime {
   time: string;
 }
 
-export const ChooseDay = () => {
+export const ChooseSessions = () => {
   const [chosenSessions, setChosenSessions] = useState<ChosenTime[]>([
     {} as ChosenTime,
   ]);
+
+  const handleSubmitEnrollments = async () => {
+    // This function will handle the submission of chosen sessions
+    console.log("Chosen sessions:", chosenSessions);
+    const nonEmtpySessions = chosenSessions.filter(
+      (session) => session.day && session.time
+    );
+    console.log("Non empty sessions:", nonEmtpySessions);
+
+  }
 
   return (
     <>
@@ -47,12 +57,15 @@ export const ChooseDay = () => {
       <Box
         sx={{
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           marginTop: 2,
+          width: "70%",
+          mx: "auto",
         }}
       >
-        <List sx={{ width: "70%" }}>
+        <List sx={{ width: "100%" }}>
           {chosenSessions.map((chosenSession, index) => {
             return (
               <ListItem>
@@ -65,6 +78,9 @@ export const ChooseDay = () => {
             );
           })}
         </List>
+        <Button variant="contained" onClick={handleSubmitEnrollments} sx={{ margin: 2, alignSelf: "flex-end" }} disabled={chosenSessions.length < 2}>
+          Submit
+        </Button>
       </Box>
     </>
   );
