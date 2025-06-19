@@ -20,9 +20,6 @@ export const getAvailableTimeSlotsFromGoogleCalendar = async (dayOfTheWeek: stri
     workStart.toISOString(),
     workEnd.toISOString()
   );
-  freeSlots.forEach((slot) => {
-    console.log(`From: ${slot.start} To: ${slot.end}`);
-  });
   return freeSlots;
 };
 
