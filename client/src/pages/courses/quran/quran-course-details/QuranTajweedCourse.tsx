@@ -23,7 +23,7 @@ export const QuranTajweedCourse = () => {
                         </CardContent>
                         <CardActions>
                             <div style={{display:'flex', width: '100%'}}>
-                                <Link to="/enroll" style={{ textDecoration: 'none', width: '100%' }}>
+                                <Link to="/enroll" style={{ textDecoration: 'none', width: '100%' }} state={{ courseCategory: 'Quran', courseName: 'Tajweed' }}>
                                     <Button sx={{float: 'right'}}>Enroll Now</Button>
                                 </Link>
                             </div>

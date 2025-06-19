@@ -3,6 +3,7 @@ import { getCurrentUser } from "../utilities/user";
 import instance from "../axios-config";
 import { EnrolledCourses } from "../types/course";
 import { User } from "../types/user";
+import { AllUserEnrollments } from "../types/enrollment";
 
 export const useMyCourses = () => {
   const [currentUser, setCurrentUser] = useState<User>();
@@ -21,12 +22,12 @@ export const useMyCourses = () => {
             },
           });
           console.log("User courses: ", userCourses);
-          const formattedCourses = userCourses.data.map((userCourse: any) => ({
+          const formattedCourses = userCourses.data.map((userCourse: AllUserEnrollments) => ({
             courseId: userCourse.courseId,
             courseName: userCourse.courseName,
-            numberOfMonthlyClasses: userCourse.classesInAMonth,
+            classDays: userCourse.classDays,
             dateOfPayment: userCourse.createdAt,
-            paymentAmount: userCourse.classesInAMonth * 5,
+            paymentAmount: userCourse.classDays.length * 5,
             subscriptionId: userCourse.subscriptionId,
           }));
           setEnrolledCourses(formattedCourses);

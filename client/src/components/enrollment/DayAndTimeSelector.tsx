@@ -12,8 +12,15 @@ import {
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import instance from "../../axios-config";
+import { format } from "path";
+
+type AvailableTimeSlot = {
+  start: string;
+  end: string;
+};
 
 interface DayAndTimeSelectorProps {
   chosenSession: { day: string; time: string };
@@ -29,10 +36,41 @@ export const DayAndTimeSelector = ({
   setChosenSessions,
 }: DayAndTimeSelectorProps) => {
   const [dayOfTheWeek, setDayOfTheWeek] = useState<string>("");
-  const [time, setTime] = useState<Dayjs | null>(null);
+  const [time, setTime] = useState<string>("");
 
   const [timeError, setTimeError] = useState<string>("");
   const [dayError, setDayError] = useState<string>("");
+
+  const [availableTimeSlots, setAvailableTimeSlots] = useState<
+    AvailableTimeSlot[]
+  >([]);
+
+  useEffect(() => {
+    const getAvailableTimeSlots = async () => {
+      try {
+        const response = await instance.get("/enroll/getAvailableTimeSlots", {
+          params: {
+            dayOfTheWeek: dayOfTheWeek,
+          },
+        });
+        setAvailableTimeSlots(formatTimeSlots(response.data));
+        console.log("Available time slots: ", response.data);
+      } catch (error) {
+        console.error("Error fetching available time slots: ", error);
+      }
+    };
+    if (dayOfTheWeek) {
+      console.log("Fetching available time slots for day:", dayOfTheWeek);
+      getAvailableTimeSlots();
+    }
+  }, [dayOfTheWeek]);
+
+  const formatTimeSlots = (slots: AvailableTimeSlot[]) => {
+    return slots.map((slot) => ({
+      start: dayjs(slot.start).format("HH:mm"),
+      end: dayjs(slot.end).format("HH:mm"),
+    }));
+  };
 
   const handleAddClass = () => {
     if (!dayOfTheWeek) {
@@ -48,11 +86,11 @@ export const DayAndTimeSelector = ({
     setDayError("");
     setTimeError("");
     setChosenSessions([
-      { day: dayOfTheWeek, time: time ? time.format("HH:mm") : "" },
+      { day: dayOfTheWeek, time: time ?? "" },
       ...chosenSessions,
     ]);
     setDayOfTheWeek("");
-    setTime(null);
+    setTime("");
   };
 
   const handleDeleteClass = () => {
@@ -62,18 +100,18 @@ export const DayAndTimeSelector = ({
     );
     setChosenSessions(updatedSessions);
     setDayOfTheWeek("");
-    setTime(null);
+    setTime("");
     setChosenSessions(updatedSessions);
   };
 
   const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    "SUNDAY",
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
   ];
 
   return (
@@ -85,7 +123,13 @@ export const DayAndTimeSelector = ({
             label="Select Day"
             labelId="day-select-label"
             onChange={(e) => setDayOfTheWeek(e.target.value)}
-            value={chosenSession.day ?? dayOfTheWeek ?? ""}
+            value={
+              dayOfTheWeek
+                ? dayOfTheWeek
+                : chosenSession?.day
+                ? chosenSession?.day
+                : ""
+            }
           >
             {daysOfWeek.map((day) => (
               <MenuItem key={day} value={day}>
@@ -95,24 +139,27 @@ export const DayAndTimeSelector = ({
           </Select>
           <FormHelperText>{dayError}</FormHelperText>
         </FormControl>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <TimePicker
-            label="Select a time"
-            sx={{ width: "100%" }}
-            onChange={(time) => setTime(time)}
-            value={
-              chosenSession.time ? dayjs(chosenSession.time, "HH:mm") : null
-            }
-            onError={(error) => setTimeError(error ? "Invalid time" : "")}
-            slotProps={{
-              textField: {
-                error: !!timeError,
-                helperText: timeError,
-              },
-            }}
-          />
-        </LocalizationProvider>
-        {chosenSession.day && chosenSession.time && (
+
+        <FormControl sx={{ width: "100%" }} error={!!timeError}>
+          <InputLabel id="time-select-label">Select Time</InputLabel>
+          <Select
+            label="Select Time"
+            labelId="time-select-label"
+            onChange={(e) => setTime(e.target.value)}
+            value={time ? time : chosenSession?.time ? chosenSession?.time : ""}
+          >
+            {availableTimeSlots.map((timeSlot, index) => (
+              <MenuItem
+                key={index}
+                value={`${timeSlot.start} - ${timeSlot.end}`}
+              >
+                {`${timeSlot.start} - ${timeSlot.end}`}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>{timeError}</FormHelperText>
+        </FormControl>
+        {chosenSession?.day && chosenSession?.time && (
           <Button
             sx={{ width: "20%", textAlign: "center" }}
             onClick={handleDeleteClass}
@@ -120,7 +167,7 @@ export const DayAndTimeSelector = ({
             <DeleteOutlineIcon sx={{ fontSize: 35 }} />
           </Button>
         )}
-        {!chosenSession.day && !chosenSession.time && (
+        {!chosenSession?.day && !chosenSession?.time && (
           <Button sx={{ width: "20%" }} onClick={handleAddClass}>
             Add class
           </Button>

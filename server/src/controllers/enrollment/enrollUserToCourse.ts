@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export const userCheckout = async (req: Request, res: Response) => {
   try {
-    const checkoutUrl = await enrollUser(JSON.parse(req.body.course).courseName, JSON.parse(req.body.course).category, req.body.classesInAMonth, req.body.userId, prisma);
+    const checkoutUrl = await enrollUser(req.body.courseName, req.body.courseCategory, req.body.enrollmentTimes, req.body.userId, prisma);
     res.status(200).json(checkoutUrl)
   } catch (error) {
     res.status(500).json({

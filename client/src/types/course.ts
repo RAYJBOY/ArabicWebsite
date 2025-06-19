@@ -1,7 +1,7 @@
 export interface EnrolledCourses {
     courseId: string;
     courseName: string;
-    numberOfMonthlyClasses: number;
+    classDays: string[];
     dateOfPayment: Date;
     paymentAmount: number;
     subscriptionId: string;

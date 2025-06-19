@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import Stripe from "stripe";
+import { ChosenEnrollmentTimes } from "../../types/enrollment";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2025-02-24.acacia",
@@ -9,7 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 export const enrollUser = async (
   courseName: string,
   courseCategory: string,
-  classesInAMonth: number,
+  enrollmentTimes :ChosenEnrollmentTimes[],
   userId: string,
   prisma: PrismaClient
 ) => {
@@ -37,9 +38,9 @@ export const enrollUser = async (
             },
             product_data: {
               name: `${courseCategory} - ${courseName}`,
-              description: `${classesInAMonth} classes in a month.`,
+              description: `${enrollmentTimes.length} classes in a month.`,
             },
-            unit_amount: classesInAMonth * 500,
+            unit_amount: enrollmentTimes.length * 500,
           },
           quantity: 1,
         },
@@ -49,7 +50,7 @@ export const enrollUser = async (
         courseName: courseName,
         courseCategory: courseCategory,
         courseId: foundCourse.id,
-        classesInAMonth: classesInAMonth,
+        enrollmentTimes: JSON.stringify(enrollmentTimes),
       },
       success_url: process.env.PAYMENT_SUCCESS_URL,
       cancel_url: process.env.PAYMENT_CANCELLED_URL,

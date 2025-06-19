@@ -1,6 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { DayOfWeek, PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import Stripe from "stripe";
+import { ChosenEnrollmentTimes } from "../../types/enrollment";
+import { addOneHour } from "../../utility/time/addOneHour";
 
 const prisma = new PrismaClient();
 
@@ -32,19 +34,34 @@ export const handleStripeWebhooks = async (
       return;
     }
 
-    const { userId, courseId, classesInAMonth } = session.metadata;
+    const { userId, courseId, enrollmentTimes } = session.metadata;
+    const parsedEnrollmentTimes: ChosenEnrollmentTimes[] = JSON.parse(
+      enrollmentTimes || "[]"
+    );
 
     const subscriptionId = session.subscription as string;
 
     try {
-      // await prisma.enrollment.create({
-      //   data: {
-      //     userId: userId,
-      //     courseId: courseId,
-      //     stripeSubscriptionId: subscriptionId,
-      //   },
-      // });
+      const createdEnrollment = await prisma.enrollment.create({
+        data: {
+          userId: userId,
+          courseId: courseId,
+          stripeSubscriptionId: subscriptionId,
+        },
+      });
       console.log("Enrollment created for user: ", userId);
+      await Promise.all(
+        parsedEnrollmentTimes.map((chosenEnrollmentTime) =>
+          prisma.enrollmentTime.create({
+            data: {
+              enrollmentId: createdEnrollment.id,
+              dayOfTheWeek: chosenEnrollmentTime.day as DayOfWeek,
+              startTime: chosenEnrollmentTime.time,
+              endTime: addOneHour(chosenEnrollmentTime),
+            },
+          })
+        )
+      );
     } catch (error) {
       console.error("Error while trying to create enrollment: ", error);
     }

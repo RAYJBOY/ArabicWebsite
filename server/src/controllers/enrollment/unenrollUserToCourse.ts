@@ -37,6 +37,12 @@ export const unenrollUserFromCourse = async (req: Request, res: Response) => {
     // Cancel the user's subscription on Stripe
     await stripe.subscriptions.cancel(subscriptionId);
 
+    await prisma.enrollmentTime.deleteMany({
+      where: {
+        enrollmentId: enrollment.id,
+      },
+    });
+
     // Unenroll the user from the course
     await prisma.enrollment.delete({
       where: {

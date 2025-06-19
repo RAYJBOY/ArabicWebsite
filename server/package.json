@@ -7,13 +7,15 @@
     "start": "node dist/src/index.js",
     "build": "npx tsc",
     "populateCourseTable": "ts-node-dev ./src/utility/database/initialiseCourseTable.ts",
-    "clearEnrollmentTable": "ts-node-dev ./src/utility/database/clearEnrollmentTable.ts"
+    "clearEnrollmentTable": "ts-node-dev ./src/utility/database/clearEnrollmentTable.ts",
+    "clearEnrollmentTimeTable": "ts-node-dev ./src/utility/database/clearEnrollmentTimeTable.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "@prisma/client": "^5.22.0",
     "@stripe/stripe-js": "^5.7.0",
     "@types/bcrypt": "^5.0.2",
@@ -24,6 +26,7 @@
     "cors": "^2.8.5",
     "email-validator": "^2.0.4",
     "express": "^4.21.1",
+    "googleapis": "^105.0.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
     "nodemailer": "^7.0.3",

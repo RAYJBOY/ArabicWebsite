@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { EnrollmentWithCourseName } from "../../types/enrollment";
+import { AllUserEnrollments } from "../../types/enrollment";
 
 export const getUserEnrollments = async (
   userId: string,
   prisma: PrismaClient
-): Promise<EnrollmentWithCourseName[]> => {
+): Promise<AllUserEnrollments[]> => {
   try {
     const foundCourses = await prisma.enrollment.findMany({
       where: {
@@ -18,6 +18,14 @@ export const getUserEnrollments = async (
         course: {
           select: {
             courseName: true,
+            category: true,
+          },
+        },
+        enrollmentTimes: {
+          select: {
+            dayOfTheWeek: true,
+            startTime: true,
+            endTime: true,
           },
         },
         createdAt: true,
@@ -25,10 +33,9 @@ export const getUserEnrollments = async (
     });
     const formattedCourses = foundCourses.map((foundCourse) => {
       return {
-        id: foundCourse.id,
-        userId: foundCourse.userId,
+        courseName: `${foundCourse.course.category} - ${foundCourse.course.courseName}`,
         courseId: foundCourse.courseId,
-        courseName: foundCourse.course.courseName,
+        classDays: foundCourse.enrollmentTimes.map((time) => time.dayOfTheWeek.toString()),
         subscriptionId: foundCourse.stripeSubscriptionId,
         createdAt: foundCourse.createdAt,
       };

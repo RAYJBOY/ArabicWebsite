@@ -9,7 +9,12 @@ import {
   Typography,
 } from "@mui/material";
 import { DayAndTimeSelector } from "../components/enrollment/DayAndTimeSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import instance from "../axios-config";
+import { getCurrentUser } from "../utilities/user";
+import { User } from "../types/user";
+import { LoginDialog } from "../components/login/LoginDialog";
+import { useLocation } from "react-router-dom";
 
 export interface ChosenTime {
   day: string;
@@ -17,18 +22,57 @@ export interface ChosenTime {
 }
 
 export const ChooseSessions = () => {
-  const [chosenSessions, setChosenSessions] = useState<ChosenTime[]>([
-    {} as ChosenTime,
-  ]);
+  const location = useLocation();
+  const { courseCategory, courseName } = location.state || {};
+  const [chosenSessions, setChosenSessions] = useState<ChosenTime[]>([]);
+  const [currentUser, setCurrentUser] = useState<User>();
+  const [showUnauthScreen, setShowUnauthScreen] = useState(false);
+
+  useEffect(() => {
+      const getSignedInUser = async () => {
+        try {
+          const user = await getCurrentUser();
+          setCurrentUser(user);
+        } catch (error: any) {
+          console.error("Error trying to get sign in user: ", error);
+          if (error.response.data.category === "AUTHORISATION") {
+            setShowUnauthScreen(true);
+          }
+        }
+      };
+      getSignedInUser();
+    }, []);
 
   const handleSubmitEnrollments = async () => {
     // This function will handle the submission of chosen sessions
-    console.log("Chosen sessions:", chosenSessions);
-    const nonEmtpySessions = chosenSessions.filter(
-      (session) => session.day && session.time
-    );
-    console.log("Non empty sessions:", nonEmtpySessions);
+    try {
+      const nonEmtpySessions = chosenSessions.filter(
+        (session) => session.day && session.time
+      );
+      const response = await instance("/enroll/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          data: JSON.stringify({
+            userId: currentUser?.id,
+            enrollmentTimes: nonEmtpySessions,
+            courseCategory: courseCategory,
+            courseName: courseName,
+          }),
+        });
+        window.location.href = response.data.url;
+    } catch (error: any) {
+      console.error("Error submitting enrollments:", error);
+      // Handle error appropriately, e.g., show a notification to the user
+    }
+  }
 
+  if (showUnauthScreen) {
+    return (
+      <LoginDialog
+        open={showUnauthScreen}
+        handleClose={() => setShowUnauthScreen(false)}
+      />
+    );
   }
 
   return (
@@ -66,11 +110,11 @@ export const ChooseSessions = () => {
         }}
       >
         <List sx={{ width: "100%" }}>
-          {chosenSessions.map((chosenSession, index) => {
+          {Array.from({length: chosenSessions.length + 1}).map((_, index) => {
             return (
               <ListItem>
                 <DayAndTimeSelector
-                  chosenSession={chosenSession}
+                  chosenSession={chosenSessions[index]}
                   setChosenSessions={setChosenSessions}
                   chosenSessions={chosenSessions}
                 />

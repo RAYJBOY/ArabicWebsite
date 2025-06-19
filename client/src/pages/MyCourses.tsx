@@ -60,7 +60,7 @@ export const MyCourses = () => {
           <TableHead>
             <TableRow>
               <TableCell>Course Name</TableCell>
-              <TableCell>Number of classes in a month</TableCell>
+              <TableCell>Class Days</TableCell>
               <TableCell>Date of Payment</TableCell>
               <TableCell>Payment Amount</TableCell>
               <TableCell>Manage Subscription</TableCell>
@@ -70,7 +70,7 @@ export const MyCourses = () => {
             {enrolledCourses.map((enrolledCourse) => (
               <TableRow>
                 <TableCell>{enrolledCourse.courseName}</TableCell>
-                <TableCell>{enrolledCourse.numberOfMonthlyClasses}</TableCell>
+                <TableCell>{enrolledCourse.classDays.join(", ")}</TableCell>
                 <TableCell>
                   {new Date(enrolledCourse.dateOfPayment).toLocaleDateString()}
                 </TableCell>
