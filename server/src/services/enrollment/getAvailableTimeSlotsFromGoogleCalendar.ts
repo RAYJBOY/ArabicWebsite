@@ -23,7 +23,7 @@ export const getAvailableTimeSlotsFromGoogleCalendar = async (dayOfTheWeek: stri
   return freeSlots;
 };
 
-const getDateOfDay = (dayOfTheWeek: string) => {
+export const getDateOfDay = (dayOfTheWeek: string) => {
   const today = new Date();
   const daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
   const targetDayIndex = daysOfWeek.indexOf(dayOfTheWeek.toLowerCase());

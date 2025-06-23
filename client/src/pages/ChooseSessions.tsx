@@ -49,6 +49,7 @@ export const ChooseSessions = () => {
       const nonEmtpySessions = chosenSessions.filter(
         (session) => session.day && session.time
       );
+      console.log("Chosen sessions to submit:", nonEmtpySessions);
       const response = await instance("/enroll/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -92,7 +93,7 @@ export const ChooseSessions = () => {
           }
           return (
             <Chip
-              label={chosenSession.day + "s at " + chosenSession.time}
+              label={chosenSession.day + " at " + chosenSession.time}
               key={index}
             />
           );
@@ -122,7 +123,7 @@ export const ChooseSessions = () => {
             );
           })}
         </List>
-        <Button variant="contained" onClick={handleSubmitEnrollments} sx={{ margin: 2, alignSelf: "flex-end" }} disabled={chosenSessions.length < 2}>
+        <Button variant="contained" onClick={handleSubmitEnrollments} sx={{ margin: 2, alignSelf: "flex-end" }} disabled={chosenSessions.length < 1}>
           Submit
         </Button>
       </Box>

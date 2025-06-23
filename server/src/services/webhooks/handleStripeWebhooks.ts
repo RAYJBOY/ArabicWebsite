@@ -2,7 +2,10 @@ import { DayOfWeek, PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import Stripe from "stripe";
 import { ChosenEnrollmentTimes } from "../../types/enrollment";
-import { addOneHour } from "../../utility/time/addOneHour";
+import { parseSlotToTimeslot, parseTime } from "../../utility/time/parseTime";
+import { authorize } from "../../utility/google/auth";
+import { getDateOfDay } from "../enrollment/getAvailableTimeSlotsFromGoogleCalendar";
+import { createCalendarEvent } from "../../utility/google/createCalendarEvent";
 
 const prisma = new PrismaClient();
 
@@ -34,7 +37,7 @@ export const handleStripeWebhooks = async (
       return;
     }
 
-    const { userId, courseId, enrollmentTimes } = session.metadata;
+    const { userId, courseId, enrollmentTimes, studentEmail } = session.metadata;
     const parsedEnrollmentTimes: ChosenEnrollmentTimes[] = JSON.parse(
       enrollmentTimes || "[]"
     );
@@ -51,19 +54,30 @@ export const handleStripeWebhooks = async (
       });
       console.log("Enrollment created for user: ", userId);
       await Promise.all(
-        parsedEnrollmentTimes.map((chosenEnrollmentTime) =>
-          prisma.enrollmentTime.create({
+        parsedEnrollmentTimes.map((chosenEnrollmentTime) => {
+          const parsedTime = parseTime(chosenEnrollmentTime.time);
+          return prisma.enrollmentTime.create({
             data: {
               enrollmentId: createdEnrollment.id,
               dayOfTheWeek: chosenEnrollmentTime.day as DayOfWeek,
-              startTime: chosenEnrollmentTime.time,
-              endTime: addOneHour(chosenEnrollmentTime),
+              startTime: parsedTime.startTime,
+              endTime: parsedTime.endTime,
             },
-          })
-        )
+          });
+        })
       );
     } catch (error) {
-      console.error("Error while trying to create enrollment: ", error);
+      console.error("Error while trying to create enrollment in DB: ", error);
+    }
+
+    try {
+      const authorisedClient = await authorize();
+      parsedEnrollmentTimes.forEach(async (chosenEnrollmentTime) => {
+        const {startTime, endTime} = parseSlotToTimeslot(chosenEnrollmentTime.day, chosenEnrollmentTime.time);
+        await createCalendarEvent(authorisedClient, startTime, endTime, `Class: ${chosenEnrollmentTime.day} - ${chosenEnrollmentTime.time}`, studentEmail);
+      });
+    } catch (error) {
+      console.error("Error while trying to create bookings in Google Calendar: ", error);
     }
   }
 

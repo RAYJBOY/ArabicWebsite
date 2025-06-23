@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 export const userCheckout = async (req: Request, res: Response) => {
   try {
+    console.log("Received request to enroll user to course:", req.body);
     const checkoutUrl = await enrollUser(req.body.courseName, req.body.courseCategory, req.body.enrollmentTimes, req.body.userId, prisma);
     res.status(200).json(checkoutUrl)
   } catch (error) {

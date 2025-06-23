@@ -10,7 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 export const enrollUser = async (
   courseName: string,
   courseCategory: string,
-  enrollmentTimes :ChosenEnrollmentTimes[],
+  enrollmentTimes: ChosenEnrollmentTimes[],
   userId: string,
   prisma: PrismaClient
 ) => {
@@ -26,6 +26,15 @@ export const enrollUser = async (
       throw new Error("Could not find course.");
     }
 
+    const studentEmail = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        email: true,
+      },
+    });
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "subscription",
@@ -40,7 +49,7 @@ export const enrollUser = async (
               name: `${courseCategory} - ${courseName}`,
               description: `${enrollmentTimes.length} classes in a month.`,
             },
-            unit_amount: enrollmentTimes.length * 500,
+            unit_amount: enrollmentTimes.length * 4 * 500,
           },
           quantity: 1,
         },
@@ -51,6 +60,7 @@ export const enrollUser = async (
         courseCategory: courseCategory,
         courseId: foundCourse.id,
         enrollmentTimes: JSON.stringify(enrollmentTimes),
+        studentEmail: studentEmail?.email || "",
       },
       success_url: process.env.PAYMENT_SUCCESS_URL,
       cancel_url: process.env.PAYMENT_CANCELLED_URL,
