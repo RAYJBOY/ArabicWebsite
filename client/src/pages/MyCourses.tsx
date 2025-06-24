@@ -49,7 +49,7 @@ export const MyCourses = () => {
       console.error("Error unenrolling from course:", error);
     }
   };
-
+  console.log("Enrolled courses: ", enrolledCourses);
   return (
     <>
       <Typography variant="h3" align="center" sx={{ margin: "1%" }}>
@@ -60,7 +60,9 @@ export const MyCourses = () => {
           <TableHead>
             <TableRow>
               <TableCell>Course Name</TableCell>
-              <TableCell>Class Days</TableCell>
+              <TableCell>Class Day</TableCell>
+              <TableCell>Start Time</TableCell>
+              <TableCell>End Time</TableCell>
               <TableCell>Date of Payment</TableCell>
               <TableCell>Payment Amount</TableCell>
               <TableCell>Manage Subscription</TableCell>
@@ -70,7 +72,9 @@ export const MyCourses = () => {
             {enrolledCourses.map((enrolledCourse) => (
               <TableRow>
                 <TableCell>{enrolledCourse.courseName}</TableCell>
-                <TableCell>{enrolledCourse.classDays.join(", ")}</TableCell>
+                <TableCell>{enrolledCourse.classDay}</TableCell>
+                <TableCell>{enrolledCourse.startTime}</TableCell>
+                <TableCell>{enrolledCourse.endTime}</TableCell>
                 <TableCell>
                   {new Date(enrolledCourse.dateOfPayment).toLocaleDateString()}
                 </TableCell>

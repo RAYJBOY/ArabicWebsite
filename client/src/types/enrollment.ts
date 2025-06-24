@@ -9,7 +9,11 @@ export interface Enrollment {
 export interface AllUserEnrollments {
   courseName: string;
   courseId: string;
-  classDays: string[];
+  classDays: {
+    dayOfTheWeek: string;
+    startTime: string;
+    endTime: string;
+  }[];
   subscriptionId: string;
   createdAt: Date;
 }

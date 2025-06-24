@@ -8,7 +8,11 @@ export interface Enrollment {
 export interface AllUserEnrollments {
   courseName: string;
   courseId: string;
-  classDays: string[];
+  classDays: {
+    dayOfTheWeek: string;
+    startTime: string;
+    endTime: string;
+  }[];
   subscriptionId: string;
   createdAt: Date;
 }
@@ -24,7 +28,13 @@ export interface EnrollmentWithUserDetails {
 export interface ChosenEnrollmentTimes {
   day: string;
   time: string;
-};
+}
+
+export interface ChosenEnrollmentTimesWithCalendarEventId {
+  day: string;
+  time: string;
+  calendarEventId: string;
+}
 
 export interface FreeSlot {
   start: string;

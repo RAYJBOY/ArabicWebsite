@@ -35,7 +35,7 @@ export const getUserEnrollments = async (
       return {
         courseName: `${foundCourse.course.category} - ${foundCourse.course.courseName}`,
         courseId: foundCourse.courseId,
-        classDays: foundCourse.enrollmentTimes.map((time) => time.dayOfTheWeek.toString()),
+        classDays: foundCourse.enrollmentTimes,
         subscriptionId: foundCourse.stripeSubscriptionId,
         createdAt: foundCourse.createdAt,
       };

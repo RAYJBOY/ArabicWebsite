@@ -22,14 +22,20 @@ export const useMyCourses = () => {
             },
           });
           console.log("User courses: ", userCourses);
-          const formattedCourses = userCourses.data.map((userCourse: AllUserEnrollments) => ({
-            courseId: userCourse.courseId,
-            courseName: userCourse.courseName,
-            classDays: userCourse.classDays,
-            dateOfPayment: userCourse.createdAt,
-            paymentAmount: userCourse.classDays.length * 5,
-            subscriptionId: userCourse.subscriptionId,
-          }));
+          const formattedCourses = userCourses.data
+            .map((userCourse: AllUserEnrollments) =>
+              userCourse.classDays.map((day) => ({
+                courseId: userCourse.courseId,
+                courseName: userCourse.courseName,
+                classDay: day.dayOfTheWeek,
+                startTime: day.startTime,
+                endTime: day.endTime,
+                dateOfPayment: userCourse.createdAt,
+                paymentAmount: 20,
+                subscriptionId: userCourse.subscriptionId,
+              }))
+            )
+            .flat();
           setEnrolledCourses(formattedCourses);
         }
       } catch (error: any) {

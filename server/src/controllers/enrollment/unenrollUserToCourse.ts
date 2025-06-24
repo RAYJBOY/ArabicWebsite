@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import Stripe from "stripe";
+import { deleteCalendarEvent } from "../../utility/google/deleteCalendarEvent";
+import { authorize } from "../../utility/google/auth";
 
 const prisma = new PrismaClient();
 
@@ -12,7 +14,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 export const unenrollUserFromCourse = async (req: Request, res: Response) => {
   const { userId, courseId, subscriptionId } = req.body;
 
-  console.log("Unenroll request received with userId:", userId, "and courseId:", courseId);
+  console.log(
+    "Unenroll request received with userId:",
+    userId,
+    "and courseId:",
+    courseId
+  );
 
   try {
     // Check if the user is enrolled in the course
@@ -36,6 +43,28 @@ export const unenrollUserFromCourse = async (req: Request, res: Response) => {
 
     // Cancel the user's subscription on Stripe
     await stripe.subscriptions.cancel(subscriptionId);
+
+    const authorisedClient = await authorize();
+    const calendarEventIds = await prisma.enrollmentTime.findMany({
+      where: {
+        enrollmentId: enrollment.id,
+      },
+      select: {
+        calendarEventId: true,
+      },
+    });
+
+    Promise.all(
+      calendarEventIds.map(async (event) => {
+        if (event.calendarEventId) {
+          try {
+            await deleteCalendarEvent(authorisedClient, event.calendarEventId);
+          } catch (error) {
+            console.error("Error deleting calendar event:", error);
+          }
+        }
+      })
+    );
 
     await prisma.enrollmentTime.deleteMany({
       where: {
