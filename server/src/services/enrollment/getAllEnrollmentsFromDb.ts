@@ -22,13 +22,22 @@ export const getAllEnrollmentsFromDb = async (
             category: true,
           },
         },
+        enrollmentTimes: {
+          select: {
+            dayOfTheWeek: true,
+            startTime: true,
+            endTime: true,
+          },
+        },
         createdAt: true,
       },
     });
+    console.log('HAMZA: got all enrollments: ', allEnrollments);
     const allEnrollmentsWithUserDetails: EnrollmentWithUserDetails[] =
       allEnrollments.map((enrollment) => ({
         studentName: `${enrollment.user.firstName} ${enrollment.user.lastName}`,
-        classesInAMonth: 5,
+        classesInAMonth: enrollment.enrollmentTimes.length * 4,
+        classDays: enrollment.enrollmentTimes,
         createdAt: enrollment.createdAt,
         email: enrollment.user.email,
         courseName: `${enrollment.course.category} - ${enrollment.course.courseName}`,

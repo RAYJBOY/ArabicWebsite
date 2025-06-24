@@ -24,7 +24,7 @@ interface HeaderProps {
 export const Header = ({ displayTitle }: HeaderProps) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
-  const userId = useAppSelector((state) => state.users.id);
+  const user = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -66,8 +66,9 @@ export const Header = ({ displayTitle }: HeaderProps) => {
             <Box
               sx={{ display: "flex", flexDirection: "row", marginLeft: "auto" }}
             >
-              {userId && <Button sx={{ width: '100%' }} color="inherit" onClick={() => navigate('/myCourses')}>My Courses</Button>}
-              {!userId && (
+              {!user.isAdmin && <Button sx={{ width: '100%' }} color="inherit" onClick={() => navigate('/myCourses')}>My Courses</Button>}
+              {user.isAdmin && <Button sx={{ width: '100%' }} color="inherit" onClick={() => navigate('/myStudents')}>My Students</Button>}
+              {!user && (
                 <Button
                   color="inherit"
                   startIcon={<Login />}
@@ -77,7 +78,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
                   Login
                 </Button>
               )}
-              {userId && (
+              {user && (
                 <Button
                   color="inherit"
                   startIcon={<Login />}

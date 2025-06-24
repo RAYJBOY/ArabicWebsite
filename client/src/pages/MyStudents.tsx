@@ -26,6 +26,9 @@ export const MyStudents = () => {
               <TableCell>Student Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Course Enrolled</TableCell>
+              <TableCell>Class Day</TableCell>
+              <TableCell>Start Time</TableCell>
+              <TableCell>End Time</TableCell>
               <TableCell>Monthly classes</TableCell>
               <TableCell>Enrollment Date</TableCell>
             </TableRow>
@@ -36,9 +39,12 @@ export const MyStudents = () => {
                 <TableCell>{enrollment.studentName}</TableCell>
                 <TableCell>{enrollment.email}</TableCell>
                 <TableCell>{enrollment.courseName}</TableCell>
-                <TableCell>{enrollment.classesInAMonth}</TableCell>
+                <TableCell>{enrollment.classDay}</TableCell>
+                <TableCell>{enrollment.startTime}</TableCell>
+                <TableCell>{enrollment.endTime}</TableCell>
+                <TableCell>{enrollment.monthlyClasses}</TableCell>
                 <TableCell>
-                  {new Date(enrollment.createdAt).toLocaleDateString()}
+                  {new Date(enrollment.enrollmentDate).toLocaleDateString()}
                 </TableCell>
               </TableRow>
             ))}

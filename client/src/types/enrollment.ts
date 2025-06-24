@@ -2,8 +2,11 @@ export interface Enrollment {
     studentName: string;
     email: string;
     courseName: string;
-    classesInAMonth: number;
-    createdAt: Date;
+    classDay: string;
+    startTime: string;
+    endTime: string;
+    enrollmentDate: Date;
+    monthlyClasses: number;
 }
 
 export interface AllUserEnrollments {
@@ -16,4 +19,18 @@ export interface AllUserEnrollments {
   }[];
   subscriptionId: string;
   createdAt: Date;
+  studentName: string;
+}
+
+export interface EnrollmentWithUserDetails {
+  classesInAMonth: number;
+  createdAt: Date;
+  email: string;
+  courseName: string;
+  classDays: {
+    dayOfTheWeek: string;
+    startTime: string;
+    endTime: string;
+  }[];
+  studentName: string;
 }

@@ -22,7 +22,12 @@ export interface EnrollmentWithUserDetails {
   createdAt: Date;
   email: string;
   courseName: string;
-  studentName?: string;
+  classDays: {
+    dayOfTheWeek: string;
+    startTime: string;
+    endTime: string;
+  }[];
+  studentName: string;
 }
 
 export interface ChosenEnrollmentTimes {
