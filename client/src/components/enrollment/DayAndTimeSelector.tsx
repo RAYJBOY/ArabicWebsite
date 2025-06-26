@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Chip,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -9,13 +8,10 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import instance from "../../axios-config";
-import { format } from "path";
+import { ChosenTime } from "../../pages/ChooseSessions";
 
 type AvailableTimeSlot = {
   start: string;
@@ -23,17 +19,19 @@ type AvailableTimeSlot = {
 };
 
 interface DayAndTimeSelectorProps {
-  chosenSession: { day: string; time: string };
-  chosenSessions: { day: string; time: string }[];
-  setChosenSessions: React.Dispatch<
-    React.SetStateAction<{ day: string; time: string }[]>
+  setChosenSession: React.Dispatch<
+    React.SetStateAction<ChosenTime | undefined>
   >;
+  userId: string;
+  courseCategory: string;
+  courseName: string;
 }
 
 export const DayAndTimeSelector = ({
-  chosenSession,
-  chosenSessions,
-  setChosenSessions,
+  setChosenSession,
+  userId,
+  courseCategory,
+  courseName,
 }: DayAndTimeSelectorProps) => {
   const [dayOfTheWeek, setDayOfTheWeek] = useState<string>("");
   const [time, setTime] = useState<string>("");
@@ -72,36 +70,28 @@ export const DayAndTimeSelector = ({
     }));
   };
 
-  const handleAddClass = () => {
-    if (!dayOfTheWeek) {
-      console.error("Please select a day.");
-      setDayError("Please select a day.");
-      return;
+  const handleSubmitEnrollments = async () => {
+    // This function will handle the submission of chosen sessions
+    const chosenSession = {
+      day: dayOfTheWeek,
+      time: time,
+    };
+    try {
+      const response = await instance("/enroll/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify({
+          userId: userId,
+          enrollmentTime: chosenSession,
+          courseCategory: courseCategory,
+          courseName: courseName,
+        }),
+      });
+      window.location.href = response.data.url;
+    } catch (error: any) {
+      console.error("Error submitting enrollments:", error);
+      // Handle error appropriately, e.g., show a notification to the user
     }
-    if (!time) {
-      console.error("Please select a time.");
-      setTimeError("Please select a time.");
-      return;
-    }
-    setDayError("");
-    setTimeError("");
-    setChosenSessions([
-      { day: dayOfTheWeek, time: time ?? "" },
-      ...chosenSessions,
-    ]);
-    setDayOfTheWeek("");
-    setTime("");
-  };
-
-  const handleDeleteClass = () => {
-    const updatedSessions = chosenSessions.filter(
-      (session) =>
-        session.day !== chosenSession.day || session.time !== chosenSession.time
-    );
-    setChosenSessions(updatedSessions);
-    setDayOfTheWeek("");
-    setTime("");
-    setChosenSessions(updatedSessions);
   };
 
   const daysOfWeek = [
@@ -115,7 +105,7 @@ export const DayAndTimeSelector = ({
   ];
 
   return (
-    <Stack spacing={2} sx={{ width: "100%" }}>
+    <Stack sx={{ width: "100%" }}>
       <Stack direction={"row"} spacing={2} sx={{ width: "100%" }}>
         <FormControl sx={{ width: "100%" }} error={!!dayError}>
           <InputLabel id="day-select-label">Select Day</InputLabel>
@@ -123,13 +113,7 @@ export const DayAndTimeSelector = ({
             label="Select Day"
             labelId="day-select-label"
             onChange={(e) => setDayOfTheWeek(e.target.value)}
-            value={
-              dayOfTheWeek
-                ? dayOfTheWeek
-                : chosenSession?.day
-                ? chosenSession?.day
-                : ""
-            }
+            value={dayOfTheWeek}
           >
             {daysOfWeek.map((day) => (
               <MenuItem key={day} value={day}>
@@ -146,7 +130,7 @@ export const DayAndTimeSelector = ({
             label="Select Time"
             labelId="time-select-label"
             onChange={(e) => setTime(e.target.value)}
-            value={time ? time : chosenSession?.time ? chosenSession?.time : ""}
+            value={time}
           >
             {availableTimeSlots.map((timeSlot, index) => (
               <MenuItem
@@ -159,20 +143,25 @@ export const DayAndTimeSelector = ({
           </Select>
           <FormHelperText>{timeError}</FormHelperText>
         </FormControl>
-        {chosenSession?.day && chosenSession?.time && (
-          <Button
-            sx={{ width: "20%", textAlign: "center" }}
-            onClick={handleDeleteClass}
-          >
-            <DeleteOutlineIcon sx={{ fontSize: 35 }} />
-          </Button>
-        )}
-        {!chosenSession?.day && !chosenSession?.time && (
-          <Button sx={{ width: "20%" }} onClick={handleAddClass}>
-            Add class
-          </Button>
-        )}
       </Stack>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "end",
+          width: "100%",
+          alignItems: "center",
+          mx: "auto",
+        }}
+      >
+        <Button
+          variant="contained"
+          onClick={handleSubmitEnrollments}
+          sx={{ marginTop: 2 }}
+          disabled={time==='' || dayOfTheWeek === ''}
+        >
+          Submit
+        </Button>
+      </Box>
     </Stack>
   );
 };

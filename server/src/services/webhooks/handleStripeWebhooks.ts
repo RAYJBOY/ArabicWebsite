@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import Stripe from "stripe";
 import {
   ChosenEnrollmentTimes,
-  ChosenEnrollmentTimesWithCalendarEventId,
 } from "../../types/enrollment";
 import { parseSlotToTimeslot, parseTime } from "../../utility/time/parseTime";
 import { authorize } from "../../utility/google/auth";
@@ -40,40 +39,39 @@ export const handleStripeWebhooks = async (
       return;
     }
 
-    const { userId, courseId, enrollmentTimes, studentEmail } =
+    const { userId, courseId, enrollmentTime, studentEmail } =
       session.metadata;
-    const parsedEnrollmentTimes: ChosenEnrollmentTimes[] = JSON.parse(
-      enrollmentTimes || "[]"
+    const parsedEnrollmentTime: ChosenEnrollmentTimes = JSON.parse(
+      enrollmentTime
     );
 
     const subscriptionId = session.subscription as string;
-    let parsedEnrollmentTimesWithCalendarEventIds: ChosenEnrollmentTimesWithCalendarEventId[] = [];
+    let calendarEventId;
     try {
       const authorisedClient = await authorize();
-      parsedEnrollmentTimesWithCalendarEventIds = await Promise.all(
-        parsedEnrollmentTimes.map(async (chosenEnrollmentTime) => {
-          const { startTime, endTime } = parseSlotToTimeslot(
-            chosenEnrollmentTime.day,
-            chosenEnrollmentTime.time
-          );
-          const calendarEventId = await createCalendarEvent(
-            authorisedClient,
-            startTime,
-            endTime,
-            `Class: ${chosenEnrollmentTime.day} - ${chosenEnrollmentTime.time}`,
-            studentEmail
-          );
-          return {
-            ...chosenEnrollmentTime,
-            calendarEventId: calendarEventId,
-          };
-        })
+        
+      const { startTime, endTime } = parseSlotToTimeslot(
+        parsedEnrollmentTime.day,
+        parsedEnrollmentTime.time
       );
+      calendarEventId = await createCalendarEvent(
+        authorisedClient,
+        startTime,
+        endTime,
+        `Class: ${parsedEnrollmentTime.day} - ${parsedEnrollmentTime.time}`,
+        studentEmail
+      );
+       
     } catch (error) {
       console.error(
         "Error while trying to create bookings in Google Calendar: ",
         error
       );
+    }
+
+    if (!calendarEventId) {
+      console.error('Could not get calendar event ID.')
+      throw new Error('Could not get calendar event ID.');
     }
 
     try {
@@ -85,22 +83,17 @@ export const handleStripeWebhooks = async (
         },
       });
       console.log("Enrollment created for user: ", userId);
-      await Promise.all(
-        parsedEnrollmentTimesWithCalendarEventIds.map(
-          (chosenEnrollmentTime) => {
-            const parsedTime = parseTime(chosenEnrollmentTime.time);
-            return prisma.enrollmentTime.create({
-              data: {
-                enrollmentId: createdEnrollment.id,
-                dayOfTheWeek: chosenEnrollmentTime.day as DayOfWeek,
-                startTime: parsedTime.startTime,
-                endTime: parsedTime.endTime,
-                calendarEventId: chosenEnrollmentTime.calendarEventId,
-              },
-            });
-          }
-        )
-      );
+      
+      const parsedTime = parseTime(parsedEnrollmentTime.time);
+      await prisma.enrollmentTime.create({
+        data: {
+          enrollmentId: createdEnrollment.id,
+          dayOfTheWeek: parsedEnrollmentTime.day as DayOfWeek,
+          startTime: parsedTime.startTime,
+          endTime: parsedTime.endTime,
+          calendarEventId: calendarEventId,
+        },
+      });      
     } catch (error) {
       console.error("Error while trying to create enrollment in DB: ", error);
     }

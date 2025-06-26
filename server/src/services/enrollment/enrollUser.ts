@@ -10,7 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 export const enrollUser = async (
   courseName: string,
   courseCategory: string,
-  enrollmentTimes: ChosenEnrollmentTimes[],
+  enrollmentTime: ChosenEnrollmentTimes,
   userId: string,
   prisma: PrismaClient
 ) => {
@@ -47,9 +47,9 @@ export const enrollUser = async (
             },
             product_data: {
               name: `${courseCategory} - ${courseName}`,
-              description: `${enrollmentTimes.length} classes in a month.`,
+              description: `Classes at ${enrollmentTime.time} on ${enrollmentTime.day}s every week.`,
             },
-            unit_amount: enrollmentTimes.length * 4 * 500,
+            unit_amount: 2000,
           },
           quantity: 1,
         },
@@ -59,7 +59,7 @@ export const enrollUser = async (
         courseName: courseName,
         courseCategory: courseCategory,
         courseId: foundCourse.id,
-        enrollmentTimes: JSON.stringify(enrollmentTimes),
+        enrollmentTime: JSON.stringify(enrollmentTime),
         studentEmail: studentEmail?.email || "",
       },
       success_url: process.env.PAYMENT_SUCCESS_URL,
