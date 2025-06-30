@@ -13,3 +13,10 @@ For Prisma schema changes, do the following:
 2) npx prisma generate
 3) npx prisma migrate dev --name init --create-only
 4) npx prisma migrate deploy
+
+To reset the DB, do the following:
+1) Remove all files in prisma/migrations (including migration_lock.toml)
+2) npx prisma migrate reset
+3) npx prisma generate
+4) npx prisma migrate dev --name init --create-only
+5) npx prisma migrate deploy
