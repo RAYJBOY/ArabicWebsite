@@ -40,11 +40,9 @@ function App() {
     const fetchUser = async () => {
       try {
         const user = await getCurrentUser();
-        console.log('HAMZA: got user: ', user);
         setUser(user);
         dispatch(signIn(user as UserState));
       } catch (error) {
-        console.log('HAMZA: error: ', error);
         dispatch(
           signIn({ id: undefined, name: undefined, isAdmin: undefined })
         );

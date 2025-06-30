@@ -13,7 +13,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LoginDialog } from "../login/LoginDialog";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { signIn } from "../../features/users/userSlice";
+import { signIn, UserState } from "../../features/users/userSlice";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../utilities/user";
 
@@ -25,6 +25,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const user = useAppSelector((state) => state.users);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -64,11 +65,11 @@ export const Header = ({ displayTitle }: HeaderProps) => {
               </Typography>
             )}
             <Box
-              sx={{ display: "flex", flexDirection: "row", marginLeft: "auto" }}
+              sx={{ display: "flex", flexDirection: "row" }}
             >
-              {!user.isAdmin && <Button sx={{ width: '100%' }} color="inherit" onClick={() => navigate('/myCourses')}>My Courses</Button>}
+              {!user.isAdmin && <Button sx={{ width: '100%', whiteSpace: 'nowrap' }} color="inherit" onClick={() => navigate('/myCourses')}>My Courses</Button>}
               {user.isAdmin && <Button sx={{ width: '100%' }} color="inherit" onClick={() => navigate('/myStudents')}>My Students</Button>}
-              {!user && (
+              {!user.id && (
                 <Button
                   color="inherit"
                   startIcon={<Login />}
@@ -78,7 +79,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
                   Login
                 </Button>
               )}
-              {user && (
+              {user.id && (
                 <Button
                   color="inherit"
                   startIcon={<Login />}

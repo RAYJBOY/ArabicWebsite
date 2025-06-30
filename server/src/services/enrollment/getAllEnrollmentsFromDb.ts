@@ -32,7 +32,6 @@ export const getAllEnrollmentsFromDb = async (
         createdAt: true,
       },
     });
-    console.log('HAMZA: got all enrollments: ', allEnrollments);
     const allEnrollmentsWithUserDetails: EnrollmentWithUserDetails[] =
       allEnrollments.map((enrollment) => ({
         studentName: `${enrollment.user.firstName} ${enrollment.user.lastName}`,

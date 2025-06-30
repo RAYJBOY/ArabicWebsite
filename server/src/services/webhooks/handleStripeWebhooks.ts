@@ -15,7 +15,6 @@ export const handleStripeWebhooks = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  console.log("HAMZA: inside the webhook handler...");
   const signature = req.headers["stripe-signature"] as string;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
@@ -30,7 +29,6 @@ export const handleStripeWebhooks = async (
   }
 
   if (event.type === "checkout.session.completed") {
-    console.log("HAMZA: Checkout session completed event received.");
     const session = event.data.object as Stripe.Checkout.Session;
 
     if (!session.metadata) {
