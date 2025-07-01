@@ -93,7 +93,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
           </Toolbar>
         </AppBar>
       </Box>
-      <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} handleUserLogout={handleUserLogout}/>
+      <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} handleUserLogout={handleUserLogout} signedInUser={user}/>
     </>
   );
 };

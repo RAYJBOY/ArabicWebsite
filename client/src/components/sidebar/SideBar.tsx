@@ -18,18 +18,22 @@ import SchoolIcon from "@mui/icons-material/School";
 import { useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { UserState } from "../../features/users/userSlice";
 
 interface SideBarProps {
   openSideBar: boolean;
   setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   handleUserLogout: () => Promise<void>;
+  signedInUser: UserState;
 }
 
 export const SideBar = ({
   openSideBar,
   setOpenSideBar,
   handleUserLogout,
+  signedInUser,
 }: SideBarProps) => {
+  console.log("Signed in user:", signedInUser);
   const [expand, setExpand] = useState(false);
 
   const expandCategory = () => {
@@ -103,7 +107,7 @@ export const SideBar = ({
           </List>
         </Collapse>
 
-        <ListItem>
+        {signedInUser.id && <ListItem>
           <Link
             to="/myCourses"
             style={{ textDecoration: "none", color: "black", width: "100%" }}
@@ -115,7 +119,7 @@ export const SideBar = ({
               <ListItemText primary="My Courses" />
             </ListItemButton>
           </Link>
-        </ListItem>
+        </ListItem>}
 
         <ListItem>
           <Link
@@ -131,14 +135,14 @@ export const SideBar = ({
           </Link>
         </ListItem>
 
-        <ListItem>
+        {signedInUser.id && <ListItem>
           <ListItemButton>
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
             <ListItemText primary="Log Out" onClick={handleUserLogout} />
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
       </List>
     </Box>
   );
