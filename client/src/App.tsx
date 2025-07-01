@@ -30,6 +30,7 @@ import { ContactUsPage } from "./pages/ContactUsPage";
 import { MyStudents } from "./pages/MyStudents";
 import { User } from "./types/user";
 import { ChooseSessions } from "./pages/ChooseSessions";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -125,6 +126,9 @@ function App() {
 
           {/* Admin routes */}
           {user?.isAdmin && <Route path="/myStudents" element={<MyStudents />} />}
+
+          {/* Reset password routes */}
+          {<Route path="/resetPassword" element={<ResetPasswordPage />} />}
         </Routes>
       </Router>
     </div>

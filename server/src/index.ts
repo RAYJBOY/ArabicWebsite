@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import bodyParser from "body-parser";
 import cors from "cors";
 import express, { Application } from "express";
@@ -7,7 +9,6 @@ import webhookRoutes from "./routes/webhookRoutes";
 import authenticationRoutes from "./routes/authenticationRoutes";
 import contactUsRoutes from "./routes/contactUsRoutes";
 import cookieParser from "cookie-parser";
-
 
 const app: Application = express();
 

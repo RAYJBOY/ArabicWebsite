@@ -11,6 +11,7 @@ import instance from "../../axios-config";
 import { signIn, UserState } from "../../features/users/userSlice";
 import { useAppDispatch } from "../../hooks";
 import { UserRole } from "../../types/user";
+import { ResetPasswordDialog } from "./ResetPasswordDialog";
 
 type LoginModalProps = {
   open: boolean;
@@ -30,6 +31,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
   const [error, setError] = useState<null | string>(null);
   const [errorCategory, setErrorCategory] = useState<string>();
   const [signedInUser, setSignedInUser] = useState<UserState | undefined>();
+  const [openResetPasswordDialog, setOpenResetPasswordDialog] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
@@ -79,6 +81,15 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
       setErrorCategory(error?.response?.data?.category);
     }
   };
+
+  if( openResetPasswordDialog ) {
+    return (
+      <ResetPasswordDialog
+        open={openResetPasswordDialog}
+        handleClose={() => setOpenResetPasswordDialog(false)}
+      />
+    );
+  }
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -170,7 +181,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
             <Button
               color="secondary"
               fullWidth
-              onClick={() => console.log("Reset Password Clicked")}
+              onClick={() => setOpenResetPasswordDialog(true)}
             >
               Reset Password
             </Button>
