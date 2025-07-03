@@ -44,7 +44,7 @@ export const IslamicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Islamic Studies", courseName: "Fiqh" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -72,7 +72,7 @@ export const IslamicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Islamic Studies", courseName: "Seera" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -100,7 +100,7 @@ export const IslamicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Islamic Studies", courseName: "Hadeeth" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -128,7 +128,7 @@ export const IslamicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Islamic Studies", courseName: "Aqeeda" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -156,7 +156,7 @@ export const IslamicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Islamic Studies", courseName: "Tafseer" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -184,7 +184,7 @@ export const IslamicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Islamic Studies", courseName: "Islamic History" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>

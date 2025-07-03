@@ -44,7 +44,7 @@ export const ArabicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Arabic", courseName: "Beginner" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -72,7 +72,7 @@ export const ArabicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Arabic", courseName: "Advanced" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -100,7 +100,7 @@ export const ArabicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Arabic", courseName: "Quranic Arabic words" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -128,7 +128,7 @@ export const ArabicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Arabic", courseName: "Conversation" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -156,7 +156,7 @@ export const ArabicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Arabic", courseName: "Level 1" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -184,7 +184,7 @@ export const ArabicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Arabic", courseName: "Level 2" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>
@@ -212,7 +212,7 @@ export const ArabicCourse = () => {
                 </Link>
               </Box>
               <Box>
-                <Link to="/enroll">
+                <Link to="/enroll" state={{ courseCategory: "Arabic", courseName: "Level 3" }}>
                   <Button>Enroll Now</Button>
                 </Link>
               </Box>

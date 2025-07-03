@@ -6,10 +6,12 @@ export const createCalendarEvent = async (
   endTime: string,
   summary: string,
   userEmail: string,
+  zoomMeetingUrl: string
 ): Promise<string> => {
   const calendar = google.calendar({ version: "v3", auth });
   const event = {
     summary: summary,
+    description: `Join Zoom Meeting: ${zoomMeetingUrl}`,
     start: {
       dateTime: startTime,
       timeZone: "Europe/London",

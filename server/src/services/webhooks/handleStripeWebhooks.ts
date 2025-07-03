@@ -8,6 +8,7 @@ import { parseSlotToTimeslot, parseTime } from "../../utility/time/parseTime";
 import { authorize } from "../../utility/google/auth";
 import { getDateOfDay } from "../enrollment/getAvailableTimeSlotsFromGoogleCalendar";
 import { createCalendarEvent } from "../../utility/google/createCalendarEvent";
+import { createZoomMeeting } from "../zoom/createZoomMeeting";
 
 const prisma = new PrismaClient();
 
@@ -52,12 +53,14 @@ export const handleStripeWebhooks = async (
         parsedEnrollmentTime.day,
         parsedEnrollmentTime.time
       );
+      const zoomMeetingUrl = createZoomMeeting();
       calendarEventId = await createCalendarEvent(
         authorisedClient,
         startTime,
         endTime,
         `Class: ${parsedEnrollmentTime.day} - ${parsedEnrollmentTime.time}`,
-        studentEmail
+        studentEmail,
+        (await zoomMeetingUrl).join_url
       );
        
     } catch (error) {
