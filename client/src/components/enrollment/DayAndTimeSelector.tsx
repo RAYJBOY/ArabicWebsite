@@ -159,7 +159,7 @@ export const DayAndTimeSelector = ({
           sx={{ marginTop: 2 }}
           disabled={time==='' || dayOfTheWeek === ''}
         >
-          Submit
+          Pay Now
         </Button>
       </Box>
     </Stack>

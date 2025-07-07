@@ -50,7 +50,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
       <Box>
         <AppBar position="static">
           <Toolbar>
-            <IconButton onClick={() => setOpenSideBar(!openSideBar)}>
+            <IconButton edge='end' onClick={() => setOpenSideBar(!openSideBar)}>
               <MenuIcon />
             </IconButton>
             {displayTitle && (
@@ -65,7 +65,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
               </Typography>
             )}
             <Box
-              sx={{ display: "flex", flexDirection: "row" }}
+              sx={{ display: { xs: "none", sm: "flex" }, gap: 2 }}
             >
               {!user.isAdmin && <Button sx={{ width: '100%', whiteSpace: 'nowrap' }} color="inherit" onClick={() => navigate('/myCourses')}>My Courses</Button>}
               {user.isAdmin && <Button sx={{ width: '100%' }} color="inherit" onClick={() => navigate('/myStudents')}>My Students</Button>}

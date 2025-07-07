@@ -55,8 +55,11 @@ export const ChooseSessions = () => {
 
   return (
     <>
-      <Typography variant="h3" align="center">
-        Choose preferred day for classes
+      <Typography variant="h3" align="center" sx={{ margin: '2%' }}>
+        Book Class
+      </Typography>
+      <Typography variant="h5" align="center" sx={{ marginTop: '5%', marginBottom: '2%' }}>
+        Select a day and time for your {courseCategory} - {courseName} classes
       </Typography>
       <Box
         sx={{
