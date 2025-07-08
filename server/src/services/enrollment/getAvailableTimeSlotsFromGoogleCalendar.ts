@@ -1,5 +1,5 @@
 import { FreeSlot } from "../../types/enrollment";
-import { authorize } from "../../utility/google/auth";
+import { getAuthorizedClient } from "../../utility/google/auth";
 import { getFreeBusy } from "../../utility/google/getFreeBusy";
 import { getFreeSlots } from "../../utility/google/getFreeSlots";
 
@@ -13,7 +13,7 @@ export const getAvailableTimeSlotsFromGoogleCalendar = async (dayOfTheWeek: stri
   const workEnd = new Date(targetDate);
   workEnd.setHours(17, 0, 0, 0); // 5:00 PM
 
-  const authorisedClient = await authorize();
+  const authorisedClient = await getAuthorizedClient();
   const busyTimeSlots = await getFreeBusy(authorisedClient, workStart.toISOString(), workEnd.toISOString());
   const freeSlots = getFreeSlots(
     busyTimeSlots,

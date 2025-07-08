@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import Stripe from "stripe";
 import { deleteCalendarEvent } from "../../utility/google/deleteCalendarEvent";
-import { authorize } from "../../utility/google/auth";
+import { getAuthorizedClient } from "../../utility/google/auth";
 
 const prisma = new PrismaClient();
 
@@ -44,7 +44,15 @@ export const unenrollUserFromCourse = async (req: Request, res: Response) => {
     // Cancel the user's subscription on Stripe
     await stripe.subscriptions.cancel(subscriptionId);
 
-    const authorisedClient = await authorize();
+    const authorisedClient = await getAuthorizedClient();
+    if (!authorisedClient) {
+      res.status(403).json({
+        message: "Google Calendar not authorized. Please authenticate first.",
+        category: "Calendar",
+      });
+      return;
+    }
+
     const calendarEventIds = await prisma.enrollmentTime.findMany({
       where: {
         enrollmentId: enrollment.id,
