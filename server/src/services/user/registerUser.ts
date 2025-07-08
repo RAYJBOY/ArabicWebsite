@@ -36,6 +36,7 @@ export const registerUser = async (user: User, prisma: PrismaClient): Promise<Us
     const salt = await genSalt();
     const hashedPassword = await hash(user.password, salt);
     user.password = hashedPassword;
+    user.dateOfBirth = new Date(user.dateOfBirth); // ensure dateOfBirth is a Date object
     // assume all went well, user is new
     const createdUser = await prisma.user.create({ data: user });
     console.log("Created new user:", createdUser);

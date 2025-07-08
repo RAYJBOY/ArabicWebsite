@@ -11,6 +11,7 @@ export interface User {
     email: string
     password: string
     role: UserRole
+    dateOfBirth: Date
 }
 
 export interface LoginUserRequest {

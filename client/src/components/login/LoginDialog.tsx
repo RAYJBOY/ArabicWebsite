@@ -12,6 +12,7 @@ import { signIn, UserState } from "../../features/users/userSlice";
 import { useAppDispatch } from "../../hooks";
 import { UserRole } from "../../types/user";
 import { ResetPasswordDialog } from "./ResetPasswordDialog";
+import { DateOfBirth } from "./DateOfBirth";
 
 type LoginModalProps = {
   open: boolean;
@@ -26,6 +27,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
   const [username, setUsername] = useState<string>();
   const [firstName, setFirstName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
+  const [dateOfBirth, setDateOfBirth] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [error, setError] = useState<null | string>(null);
@@ -47,10 +49,11 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
 
   const handleSignUp = async () => {
     try {
+      console.log("Signing up with data:", { firstName, lastName, dateOfBirth, username, email, password });
       const response = await instance("/users/sign-up", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        data: JSON.stringify({ firstName, lastName, username, email, password }),
+        data: JSON.stringify({ firstName, lastName, dateOfBirth, username, email, password }),
       });
       console.log(response);
       handleClose();
@@ -95,36 +98,41 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{isSignUp ? "Sign Up" : "Sign In"}</DialogTitle>
       <DialogContent>
-        {isSignUp && (
-          <TextField
-            error={errorCategory === "First Name"}
-            helperText={errorCategory === "First Name" && error}
-            required
-            type="firstName"
-            label="First Name"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            onChange={(input: React.ChangeEvent<HTMLInputElement>) =>
-              setFirstName(input.target.value)
-            }
-          />
-        )}
-        {isSignUp && (
-          <TextField
-            error={errorCategory === "Last Name"}
-            helperText={errorCategory === "Last Name" && error}
-            required
-            type="lastName"
-            label="Last Name"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            onChange={(input: React.ChangeEvent<HTMLInputElement>) =>
-              setLastName(input.target.value)
-            }
-          />
-        )}
+        <Box display={"flex"} gap={2}>
+          {isSignUp && (
+            <TextField
+              error={errorCategory === "First Name"}
+              helperText={errorCategory === "First Name" && error}
+              required
+              type="firstName"
+              label="First Name"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              onChange={(input: React.ChangeEvent<HTMLInputElement>) =>
+                setFirstName(input.target.value)
+              }
+            />
+          )}
+          {isSignUp && (
+            <TextField
+              error={errorCategory === "Last Name"}
+              helperText={errorCategory === "Last Name" && error}
+              required
+              type="lastName"
+              label="Last Name"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              onChange={(input: React.ChangeEvent<HTMLInputElement>) =>
+                setLastName(input.target.value)
+              }
+            />
+          )}
+        </Box>
+        {isSignUp && <Box display={"flex"} gap={1} sx={{ mt: 2 }}>
+          <DateOfBirth setDateOfBirth={setDateOfBirth} />
+        </Box>}
         <TextField
           error={errorCategory === "USERNAME"}
           helperText={errorCategory === "USERNAME" && error}
