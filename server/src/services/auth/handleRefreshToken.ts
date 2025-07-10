@@ -11,6 +11,7 @@ export const handleRefreshToken = async (
     const refreshToken = req.cookies.refresh_token;
 
     if (!refreshToken) {
+      console.error("Refresh token missing");
       res.status(401).json({ error: "Refresh token missing" });
       return;
     }
@@ -20,6 +21,7 @@ export const handleRefreshToken = async (
     try {
       payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!);
     } catch (err) {
+      console.error("Invalid or expired refresh token", err);
       res.status(403).json({ error: "Invalid or expired refresh token" });
       return;
     }
@@ -30,6 +32,7 @@ export const handleRefreshToken = async (
     });
 
     if (!user || user.refreshToken !== refreshToken) {
+      console.error("Refresh token does not match");
       res.status(403).json({ error: "Refresh token does not match" });
       return;
     }

@@ -3,6 +3,7 @@ import { User } from "../types/user";
 
 export const getCurrentUser = async (): Promise<User> => {
   const response = await instance.get("/users/getCurrentUser");
+  console.log("Current user data:", response.data);
   return response.data;
 };
 
