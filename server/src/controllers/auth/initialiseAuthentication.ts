@@ -19,11 +19,15 @@ export const initialiseAuthentication = async (_: Request, res: Response) => {
     redirect_uris[0]
   );
 
+  console.log("OAuth2 Client initialized with credentials: ", oAuth2Client)
+
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
     prompt: "consent", // forces refresh_token to be issued
   });
+
+  console.log("Authentication URL:", authUrl);
 
   res.redirect(authUrl);
 }
