@@ -29,4 +29,4 @@ app.use("/enroll", enrollmentRoutes);
 app.use("/auth", authenticationRoutes);
 app.use("/contact", contactUsRoutes);
 
-app.listen(5001, () => console.log("Listening on port 5001"));
+app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));
