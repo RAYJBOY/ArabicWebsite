@@ -14,6 +14,7 @@ export const getAllEnrollmentsFromDb = async (
             firstName: true,
             lastName: true,
             email: true,
+            dateOfBirth: true,
           },
         },
         course: {
@@ -40,6 +41,7 @@ export const getAllEnrollmentsFromDb = async (
         createdAt: enrollment.createdAt,
         email: enrollment.user.email,
         courseName: `${enrollment.course.category} - ${enrollment.course.courseName}`,
+        dateOfBirth: enrollment.user.dateOfBirth.toLocaleDateString(), // Format date to YYYY-MM-DD
       }));
     return allEnrollmentsWithUserDetails;
   } catch (error) {

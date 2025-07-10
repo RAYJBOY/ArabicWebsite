@@ -28,6 +28,7 @@ export interface EnrollmentWithUserDetails {
     endTime: string;
   }[];
   studentName: string;
+  dateOfBirth: string;
 }
 
 export interface ChosenEnrollmentTimes {

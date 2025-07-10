@@ -7,6 +7,7 @@ export interface Enrollment {
     endTime: string;
     enrollmentDate: Date;
     monthlyClasses: number;
+    dateOfBirth: string;
 }
 
 export interface AllUserEnrollments {
@@ -33,4 +34,5 @@ export interface EnrollmentWithUserDetails {
     endTime: string;
   }[];
   studentName: string;
+  dateOfBirth: string;
 }

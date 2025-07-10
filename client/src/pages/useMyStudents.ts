@@ -20,6 +20,7 @@ export const useMyStudents = () => {
               endTime: enrollment.endTime,
               monthlyClasses: userEnrollment.classDays.length * 4,
               enrollmentDate: userEnrollment.createdAt,
+              dateOfBirth: userEnrollment.dateOfBirth,
             }));
           })
           .flat();
