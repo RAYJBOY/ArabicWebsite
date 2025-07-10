@@ -55,7 +55,7 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
         headers: { "Content-Type": "application/json" },
         data: JSON.stringify({ firstName, lastName, dateOfBirth, username, email, password }),
       });
-      console.log(response);
+      console.log('HAMZA, got response: ', response);
       handleClose();
     } catch (error: any) {
       setError(error.response.data.message);
