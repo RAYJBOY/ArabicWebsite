@@ -104,6 +104,6 @@ export async function getAuthorizedClient() {
   }
 
   const oAuth2Client = await getOAuthClient();
-  oAuth2Client.setCredentials(JSON.parse(token));
+  oAuth2Client.setCredentials(token);
   return oAuth2Client;
 }
