@@ -113,13 +113,14 @@ export async function handleAuthCode(code: string) {
 
 // Load stored tokens
 export async function getAuthorizedClient() {
-  try {
-    const token = await fs.readFile(TOKEN_PATH, 'utf-8');
-    const oAuth2Client = await getOAuthClient();
-    oAuth2Client.setCredentials(JSON.parse(token));
-    return oAuth2Client;
-  } catch (err) {
-    console.log('No saved token. Run /auth/init');
+  // TODO: Load tokens from DB or env variable
+  const tokens = process.env.GOOGLE_TOKENS;
+  if (!tokens) {
+    console.log('No saved tokens found');
     return null;
   }
+
+  const oAuth2Client = await getOAuthClient();
+  oAuth2Client.setCredentials(JSON.parse(tokens));
+  return oAuth2Client;
 }
