@@ -95,13 +95,15 @@ export async function getAuthUrl() {
 // Load stored tokens
 export async function getAuthorizedClient() {
   // TODO: Load tokens from DB or env variable
-  const tokens = process.env.GOOGLE_TOKENS;
-  if (!tokens) {
+  const base64Token = process.env.GOOGLE_TOKEN_BASE64!;
+  const token = JSON.parse(Buffer.from(base64Token, 'base64').toString('utf-8'));
+
+  if (!token) {
     console.log('No saved tokens found');
     return null;
   }
 
   const oAuth2Client = await getOAuthClient();
-  oAuth2Client.setCredentials(JSON.parse(tokens));
+  oAuth2Client.setCredentials(JSON.parse(token));
   return oAuth2Client;
 }
