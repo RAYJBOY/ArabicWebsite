@@ -9,14 +9,14 @@ const router = Router();
 const SCOPES = ['https://www.googleapis.com/auth/calendar'];
 
 export const initialiseAuthentication = async (_: Request, res: Response) => {
-  const content = await fs.readFile(CREDENTIALS_PATH, 'utf8');
-  const credentials = JSON.parse(content);
-  const { client_secret, client_id, redirect_uris } = credentials.web;
+  // const content = await fs.readFile(CREDENTIALS_PATH, 'utf8');
+  // const credentials = JSON.parse(content);
+  // const { client_secret, client_id, redirect_uris } = credentials.web;
 
   const oAuth2Client = new google.auth.OAuth2(
-    client_id,
-    client_secret,
-    redirect_uris[0]
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.GOOGLE_REDIRECT_URI
   );
 
   console.log("OAuth2 Client initialized with credentials: ", oAuth2Client)
