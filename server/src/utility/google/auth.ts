@@ -68,26 +68,16 @@
 // }
 
 import fs from 'fs/promises';
-import path from 'path';
 import { google } from 'googleapis';
 
 const SCOPES = ['https://www.googleapis.com/auth/calendar'];
-export const TOKEN_PATH = path.join(process.cwd(), 'token.json');
-export const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json');
-
-// Load credentials.json
-async function loadClientSecrets() {
-  const content = await fs.readFile(CREDENTIALS_PATH, 'utf-8');
-  return JSON.parse(content);
-}
 
 // Create OAuth2Client
-export async function getOAuthClient() {
-  const { web } = await loadClientSecrets();
+export function getOAuthClient() {
   return new google.auth.OAuth2(
-    web.client_id,
-    web.client_secret,
-    web.redirect_uris[0]
+    process.env.GOOGLE_CLIENT_ID!,
+    process.env.GOOGLE_CLIENT_SECRET!,
+    process.env.GOOGLE_REDIRECT_URI!
   );
 }
 
@@ -100,15 +90,6 @@ export async function getAuthUrl() {
     prompt: 'consent', // ensures refresh_token is returned
   });
   return authUrl;
-}
-
-// Exchange code for tokens and save them
-export async function handleAuthCode(code: string) {
-  const oAuth2Client = await getOAuthClient();
-  const { tokens } = await oAuth2Client.getToken(code);
-  oAuth2Client.setCredentials(tokens);
-  await fs.writeFile(TOKEN_PATH, JSON.stringify(tokens));
-  return oAuth2Client;
 }
 
 // Load stored tokens
