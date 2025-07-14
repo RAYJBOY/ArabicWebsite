@@ -13,12 +13,16 @@ import cookieParser from "cookie-parser";
 const app: Application = express();
 
 app.use(cookieParser());
+
+console.log("CORS allowing origin:", process.env.FRONTEND_ORIGIN);
 app.use(
   cors({
     origin: `${process.env.FRONTEND_ORIGIN}`,
     credentials: true,
   })
 );
+
+app.options('*', cors());
 
 app.use("/webhook", webhookRoutes);
 
