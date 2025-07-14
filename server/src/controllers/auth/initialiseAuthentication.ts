@@ -18,6 +18,7 @@ export const initialiseAuthentication = async (_: Request, res: Response) => {
     access_type: "offline",
     scope: SCOPES,
     prompt: "consent", // forces refresh_token to be issued
+    redirect_uri: process.env.GOOGLE_REDIRECT_URI,
   });
 
   console.log("Authentication URL:", authUrl);

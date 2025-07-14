@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { signIn, UserState } from "../../features/users/userSlice";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../utilities/user";
+import instance from "../../axios-config";
 
 interface HeaderProps {
   displayTitle: boolean;
@@ -40,6 +41,10 @@ export const Header = ({ displayTitle }: HeaderProps) => {
       console.error("Error during user logout:", error);
     }
   };
+
+  const handleVerification = async () => {
+    window.open(`${process.env.REACT_APP_BACKEND_URL}/auth/init`, '_blank');
+  }
 
   return (
     <>
@@ -68,6 +73,7 @@ export const Header = ({ displayTitle }: HeaderProps) => {
               sx={{ display: { xs: "none", sm: "flex" }, gap: 2 }}
             >
               {!user.isAdmin && <Button sx={{ width: '100%', whiteSpace: 'nowrap' }} color="inherit" onClick={() => navigate('/myCourses')}>My Courses</Button>}
+              {user.isAdmin && <Button sx={{ width: '100%' }} color="inherit" onClick={() => handleVerification()}>Verify</Button>}
               {user.isAdmin && <Button sx={{ width: '100%' }} color="inherit" onClick={() => navigate('/myStudents')}>My Students</Button>}
               {!user.id && (
                 <Button
