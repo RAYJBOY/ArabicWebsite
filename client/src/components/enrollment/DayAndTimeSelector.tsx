@@ -49,6 +49,7 @@ export const DayAndTimeSelector = ({
         const response = await instance.get("/enroll/getAvailableTimeSlots", {
           params: {
             dayOfTheWeek: dayOfTheWeek,
+            userId: userId,
           },
         });
         setAvailableTimeSlots(formatTimeSlots(response.data));

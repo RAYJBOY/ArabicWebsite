@@ -1,0 +1,12 @@
+model GoogleAuthToken {
+    id           String   @id @default(uuid())
+    accessToken  String   @db.Text
+    refreshToken String   @db.Text
+    expiryDate   BigInt // Unix timestamp
+    scope        String?  @db.Text
+    tokenType    String?
+    user         User     @relation(fields: [userId], references: [id])
+    userId       String   @unique
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+}

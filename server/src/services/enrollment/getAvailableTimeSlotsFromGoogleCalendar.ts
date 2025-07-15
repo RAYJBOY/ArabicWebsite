@@ -3,7 +3,7 @@ import { getAuthorizedClient } from "../../utility/google/auth";
 import { getFreeBusy } from "../../utility/google/getFreeBusy";
 import { getFreeSlots } from "../../utility/google/getFreeSlots";
 
-export const getAvailableTimeSlotsFromGoogleCalendar = async (dayOfTheWeek: string): Promise<
+export const getAvailableTimeSlotsFromGoogleCalendar = async (dayOfTheWeek: string, userId: string): Promise<
   FreeSlot[]
 > => {
   const targetDate = getDateOfDay(dayOfTheWeek);
@@ -13,7 +13,7 @@ export const getAvailableTimeSlotsFromGoogleCalendar = async (dayOfTheWeek: stri
   const workEnd = new Date(targetDate);
   workEnd.setHours(17, 0, 0, 0); // 5:00 PM
 
-  const authorisedClient = await getAuthorizedClient();
+  const authorisedClient = await getAuthorizedClient(userId);
   const busyTimeSlots = await getFreeBusy(authorisedClient, workStart.toISOString(), workEnd.toISOString());
   const freeSlots = getFreeSlots(
     busyTimeSlots,

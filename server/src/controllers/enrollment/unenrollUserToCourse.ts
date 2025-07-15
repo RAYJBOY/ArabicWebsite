@@ -44,7 +44,7 @@ export const unenrollUserFromCourse = async (req: Request, res: Response) => {
     // Cancel the user's subscription on Stripe
     await stripe.subscriptions.cancel(subscriptionId);
 
-    const authorisedClient = await getAuthorizedClient();
+    const authorisedClient = await getAuthorizedClient(userId);
     if (!authorisedClient) {
       res.status(403).json({
         message: "Google Calendar not authorized. Please authenticate first.",

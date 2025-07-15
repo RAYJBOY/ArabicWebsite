@@ -17,4 +17,5 @@ model User {
     updatedAt          DateTime            @updatedAt
     enrollments        Enrollment[]
     passwordResetToken PasswordResetToken?
+    googleAuthToken    GoogleAuthToken?
 }

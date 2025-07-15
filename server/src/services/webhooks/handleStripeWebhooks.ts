@@ -6,7 +6,6 @@ import {
 } from "../../types/enrollment";
 import { parseSlotToTimeslot, parseTime } from "../../utility/time/parseTime";
 import { getAuthorizedClient } from "../../utility/google/auth";
-import { getDateOfDay } from "../enrollment/getAvailableTimeSlotsFromGoogleCalendar";
 import { createCalendarEvent } from "../../utility/google/createCalendarEvent";
 import { createZoomMeeting } from "../zoom/createZoomMeeting";
 
@@ -47,7 +46,7 @@ export const handleStripeWebhooks = async (
     const subscriptionId = session.subscription as string;
     let calendarEventId;
     try {
-      const authorisedClient = await getAuthorizedClient();
+      const authorisedClient = await getAuthorizedClient(userId);
         
       const { startTime, endTime } = parseSlotToTimeslot(
         parsedEnrollmentTime.day,
