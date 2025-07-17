@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "start": "node dist/index.js",
-    "build": "npx tsc",
+    "build": "npx tsc && npx prisma generate",
     "populateCourseTable": "ts-node-dev ./src/utility/database/initialiseCourseTable.ts",
     "clearEnrollmentTable": "ts-node-dev ./src/utility/database/clearEnrollmentTable.ts",
     "clearEnrollmentTimeTable": "ts-node-dev ./src/utility/database/clearEnrollmentTimeTable.ts"
