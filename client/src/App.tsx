@@ -31,6 +31,8 @@ import { MyStudents } from "./pages/MyStudents";
 import { User } from "./types/user";
 import { ChooseSessions } from "./pages/ChooseSessions";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import CookiePolicy from "./pages/CookiePolicy";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -129,6 +131,10 @@ function App() {
 
           {/* Reset password routes */}
           {<Route path="/resetPassword" element={<ResetPasswordPage />} />}
+
+          {/* Policy routes */}
+          {<Route path="/cookiePolicy" element={<CookiePolicy />} />}
+          {<Route path="/privacyPolicy" element={<PrivacyPolicy />} />}
         </Routes>
       </Router>
     </div>
