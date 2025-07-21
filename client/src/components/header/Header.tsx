@@ -67,10 +67,6 @@ export const Header = ({ displayTitle }: HeaderProps) => {
     }
   };
 
-  const handleVerification = async () => {
-    window.open(`${process.env.REACT_APP_BACKEND_URL}/auth/init`, "_blank");
-  };
-
   const handleCloseSnackbar = () => {
     setOpenErrorSnackbar(false);
     setDeleteError(null);
@@ -121,15 +117,6 @@ export const Header = ({ displayTitle }: HeaderProps) => {
                   onClick={() => navigate("/myCourses")}
                 >
                   My Courses
-                </Button>
-              )}
-              {user.isAdmin && (
-                <Button
-                  sx={{ width: "100%" }}
-                  color="inherit"
-                  onClick={() => handleVerification()}
-                >
-                  Verify
                 </Button>
               )}
               {user.isAdmin && (

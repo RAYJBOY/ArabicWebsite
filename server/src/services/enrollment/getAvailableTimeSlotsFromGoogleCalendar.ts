@@ -13,7 +13,7 @@ export const getAvailableTimeSlotsFromGoogleCalendar = async (dayOfTheWeek: stri
   const workEnd = new Date(targetDate);
   workEnd.setHours(17, 0, 0, 0); // 5:00 PM
 
-  const authorisedClient = await getAuthorizedClient(userId);
+  const authorisedClient = await getAuthorizedClient(process.env.TEACHER_USER_ID!);
   const busyTimeSlots = await getFreeBusy(authorisedClient, workStart.toISOString(), workEnd.toISOString());
   const freeSlots = getFreeSlots(
     busyTimeSlots,

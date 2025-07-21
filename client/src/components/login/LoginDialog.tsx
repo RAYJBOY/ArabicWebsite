@@ -33,7 +33,8 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
   const [error, setError] = useState<null | string>(null);
   const [errorCategory, setErrorCategory] = useState<string>();
   const [signedInUser, setSignedInUser] = useState<UserState | undefined>();
-  const [openResetPasswordDialog, setOpenResetPasswordDialog] = useState<boolean>(false);
+  const [openResetPasswordDialog, setOpenResetPasswordDialog] =
+    useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
@@ -49,13 +50,26 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
 
   const handleSignUp = async () => {
     try {
-      console.log("Signing up with data:", { firstName, lastName, dateOfBirth, username, email, password });
+      console.log("Signing up with data:", {
+        firstName,
+        lastName,
+        dateOfBirth,
+        username,
+        email,
+        password,
+      });
       const response = await instance("/users/sign-up", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        data: JSON.stringify({ firstName, lastName, dateOfBirth, username, email, password }),
+        data: JSON.stringify({
+          firstName,
+          lastName,
+          dateOfBirth,
+          username,
+          email,
+          password,
+        }),
       });
-      console.log('HAMZA, got response: ', response);
       handleClose();
     } catch (error: any) {
       setError(error.response.data.message);
@@ -79,13 +93,29 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
         });
       }
       handleClose();
+      if (response.data.role === UserRole.ADMIN) {
+        const tokenResponse = await instance("/auth/getGoogleToken", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          params: { userId: response.data.id },
+        });
+        console.log("Google token response:", tokenResponse);
+
+        const { needsAuth } = tokenResponse.data || {};
+
+        if (needsAuth) {
+          const authUrl = `${process.env.REACT_APP_BACKEND_URL}/auth/init?userId=${response.data.id}`;
+          window.open(authUrl, "_blank", "noopener,noreferrer");
+        }
+      }
     } catch (error: any) {
+      console.error("Sign-in error:", error);
       setError(error?.response?.data?.message);
       setErrorCategory(error?.response?.data?.category);
     }
   };
 
-  if( openResetPasswordDialog ) {
+  if (openResetPasswordDialog) {
     return (
       <ResetPasswordDialog
         open={openResetPasswordDialog}
@@ -130,9 +160,11 @@ export const LoginDialog: React.FC<LoginModalProps> = ({
             />
           )}
         </Box>
-        {isSignUp && <Box display={"flex"} gap={1} sx={{ mt: 2 }}>
-          <DateOfBirth setDateOfBirth={setDateOfBirth} />
-        </Box>}
+        {isSignUp && (
+          <Box display={"flex"} gap={1} sx={{ mt: 2 }}>
+            <DateOfBirth setDateOfBirth={setDateOfBirth} />
+          </Box>
+        )}
         <TextField
           error={errorCategory === "USERNAME"}
           helperText={errorCategory === "USERNAME" && error}

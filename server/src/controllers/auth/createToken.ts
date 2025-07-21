@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-import { google } from "googleapis";
 import { getOAuthClient } from "../../utility/google/auth";
 import { PrismaClient } from "@prisma/client";
 

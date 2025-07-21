@@ -46,7 +46,7 @@ export const handleStripeWebhooks = async (
     const subscriptionId = session.subscription as string;
     let calendarEventId;
     try {
-      const authorisedClient = await getAuthorizedClient(userId);
+      const authorisedClient = await getAuthorizedClient(process.env.TEACHER_USER_ID!);
         
       const { startTime, endTime } = parseSlotToTimeslot(
         parsedEnrollmentTime.day,

@@ -4,9 +4,11 @@ import { requestPasswordReset } from "../controllers/auth/requestPasswordReset";
 import { resetPassword } from "../controllers/auth/resetPassword";
 import { initialiseAuthentication } from "../controllers/auth/initialiseAuthentication";
 import { createToken } from "../controllers/auth/createToken";
+import { handleGetGoogleToken } from "../controllers/auth/handleGetGoogleToken";
 
 const router: Router = Router();
 
+router.get('/getGoogleToken', handleGetGoogleToken);
 router.get('/init', initialiseAuthentication);
 router.get('/createToken', createToken);
 router.post('/refresh', refreshToken);
